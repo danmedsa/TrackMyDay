@@ -1,4 +1,4 @@
-package com.danielmedina.trackmyday;
+package com.team404.trackmyday;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.danielmedina.trackmyday", appContext.getPackageName());
+        assertEquals("com.team404.trackmyday", appContext.getPackageName());
     }
 }

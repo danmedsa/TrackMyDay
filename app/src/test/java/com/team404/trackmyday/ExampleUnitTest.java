@@ -1,4 +1,4 @@
-package com.danielmedina.trackmyday;
+package com.team404.trackmyday;
 
 import org.junit.Test;
 
