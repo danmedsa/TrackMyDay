@@ -16,9 +16,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-        debug{
-            debuggable true
-        }
     }
 }
 
@@ -28,14 +25,14 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.google.android.gms:play-services-auth:9.6.1'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 
-    dependencies {
-        // ..
-        compile 'com.google.android.gms:play-services-auth:9.2.1'
-
-        // glide is added to load the g+ profile image. Ignore if you want
-        compile 'com.github.bumptech.glide:glide:3.7.0'
-    }
+    //AWS
+    compile 'com.amazonaws:aws-android-sdk-core:2.2.+'
+    compile 'com.amazonaws:aws-android-sdk-s3:2.2.+'
+    compile 'com.amazonaws:aws-android-sdk-ddb:2.2.+'
+    compile 'com.amazonaws:aws-android-sdk-cognito:2.2.+'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

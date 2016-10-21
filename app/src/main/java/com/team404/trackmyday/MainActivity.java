@@ -12,6 +12,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.amazonaws.auth.CognitoCachingCredentialsProvider;
+import com.amazonaws.mobileconnectors.cognito.CognitoSyncManager;
+import com.amazonaws.mobileconnectors.cognito.Dataset;
+import com.amazonaws.mobileconnectors.cognito.DefaultSyncCallback;
+import com.amazonaws.regions.Regions;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.auth.api.Auth;
@@ -25,11 +30,15 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
-public class LoginActivity extends AppCompatActivity implements
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class MainActivity extends AppCompatActivity implements
         View.OnClickListener,
         GoogleApiClient.OnConnectionFailedListener {
 
-    private static final String TAG = LoginActivity.class.getSimpleName();
+    private static final String TAG = MainActivity.class.getSimpleName();
     private static final int RC_SIGN_IN = 007;
 
     private GoogleApiClient mGoogleApiClient;
@@ -40,15 +49,15 @@ public class LoginActivity extends AppCompatActivity implements
     private LinearLayout llProfileLayout;
     private ImageView imgProfilePic;
     private TextView txtName, txtEmail;
+    private String tokenid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_main);
 
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         btnSignOut = (Button) findViewById(R.id.btn_sign_out);
-        btnRevokeAccess = (Button) findViewById(R.id.btn_revoke_access);
         llProfileLayout = (LinearLayout) findViewById(R.id.llProfile);
         imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
         txtName = (TextView) findViewById(R.id.txtName);
@@ -56,7 +65,6 @@ public class LoginActivity extends AppCompatActivity implements
 
         btnSignIn.setOnClickListener(this);
         btnSignOut.setOnClickListener(this);
-        btnRevokeAccess.setOnClickListener(this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -71,6 +79,7 @@ public class LoginActivity extends AppCompatActivity implements
         btnSignIn.setSize(SignInButton.SIZE_STANDARD);
         btnSignIn.setScopes(gso.getScopeArray());
     }
+
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -79,16 +88,6 @@ public class LoginActivity extends AppCompatActivity implements
 
     private void signOut() {
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-                        updateUI(false);
-                    }
-                });
-    }
-
-    private void revokeAccess() {
-        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
                 new ResultCallback<Status>() {
                     @Override
                     public void onResult(Status status) {
@@ -107,13 +106,15 @@ public class LoginActivity extends AppCompatActivity implements
 
             String personName = acct.getDisplayName();
             String email = acct.getEmail();
+            tokenid = acct.getIdToken();
+            String idToken = acct.getIdToken();
             String personPhotoUrl;
-
-            if (acct.getPhotoUrl()== null){
+            if (acct.getPhotoUrl() == null) {
                 personPhotoUrl = "https://lh4.googleusercontent.com/-v0soe-ievYE/AAAAAAAAAAI/AAAAAAACyas/yR1_yhwBcBA/photo.jpg?sz=50";
-            }else{
+            } else {
                 personPhotoUrl = acct.getPhotoUrl().toString();
             }
+
 
             Log.e(TAG, "Name: " + personName + ", email: " + email
                     + ", Image: " + personPhotoUrl);
@@ -125,6 +126,78 @@ public class LoginActivity extends AppCompatActivity implements
                     .crossFade()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imgProfilePic);
+
+
+//            AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
+//                @Override
+//                protected String doInBackground(Void... params) {
+//                    GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
+//                    AccountManager am = AccountManager.get(getApplicationContext());
+//                    if (ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
+//                        // TODO: Consider calling
+//                        //    ActivityCompat#requestPermissions
+//                        // here to request the missing permissions, and then overriding
+//                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                        //                                          int[] grantResults)
+//                        // to handle the case where the user grants the permission. See the documentation
+//                        // for ActivityCompat#requestPermissions for more details.
+//                        return "not compat";
+//                    }
+//                    Account[] accounts = am.getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
+//                    String token = null;
+//                    try {
+//                        token = GoogleAuthUtil.getToken(getApplicationContext(), accounts[0].name,
+//                                "954927697414-dnumic2g92hr888fm67venl9kkquiucm.apps.googleusercontent.com");
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    } catch (GoogleAuthException e) {
+//                        e.printStackTrace();
+//                    }
+//                    tokenid = token;
+//                    return token;
+//                }
+//
+//                @Override
+//                protected void onPostExecute(String token) {
+//                    //acctTokenID = token;
+//                    Log.i(TAG, "Access token retrieved:" + token);
+//                }
+//                //E1:52:85:4B:3C:45:06:30:23:B0:4A:25:60:E4:55:0F:81:BF:4C:D2
+//            };
+//            task.execute();
+
+            //AWS Cognito
+            // Initialize the Amazon Cognito credentials provider
+            CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
+                    getApplicationContext(),
+//                "TrackMyDay",
+                    "us-east-1:72e0d18f-ef52-4b2d-96e5-e7db7ce0e040",
+//                "arn:aws:iam::471405578050:role/Cognito_TrackMyDayUnauth",
+//                "arn:aws:iam::471405578050:role/Cognito_TrackMyDayAuth",
+                    Regions.US_EAST_1);
+
+
+            // Initialize the Cognito Sync client
+            CognitoSyncManager syncClient = new CognitoSyncManager(
+                    getApplicationContext(),
+                    Regions.US_EAST_1, // Region
+                    credentialsProvider);
+
+
+
+            Map<String, String> logins = new HashMap<String, String>();
+            logins.put("accounts.google.com", tokenid);
+            credentialsProvider.setLogins(logins);
+
+            // Create a record in a dataset and synchronize with the server
+            Dataset dataset = syncClient.openOrCreateDataset("TrackMyDay");
+            dataset.put("myKey", "myValue");
+            dataset.synchronize(new DefaultSyncCallback() {
+                @Override
+                public void onSuccess(Dataset dataset, List newRecords) {
+                    //Your handler code here
+                }
+            });
 
             updateUI(true);
         } else {
@@ -146,9 +219,6 @@ public class LoginActivity extends AppCompatActivity implements
                 signOut();
                 break;
 
-            case R.id.btn_revoke_access:
-                revokeAccess();
-                break;
         }
     }
 
@@ -216,13 +286,12 @@ public class LoginActivity extends AppCompatActivity implements
         if (isSignedIn) {
             btnSignIn.setVisibility(View.GONE);
             btnSignOut.setVisibility(View.VISIBLE);
-            btnRevokeAccess.setVisibility(View.VISIBLE);
             llProfileLayout.setVisibility(View.VISIBLE);
         } else {
             btnSignIn.setVisibility(View.VISIBLE);
             btnSignOut.setVisibility(View.GONE);
-            btnRevokeAccess.setVisibility(View.GONE);
             llProfileLayout.setVisibility(View.GONE);
         }
     }
+
 }

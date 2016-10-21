@@ -1,19 +1,50 @@
 {
   "project_info": {
-    "project_number": "954927697414",
-    "project_id": "firebase-track-my-day"
+    "project_number": "1076443853249",
+    "project_id": "firebase-trackmyday"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:954927697414:android:820eb859bf4bd2af",
+        "mobilesdk_app_id": "1:1076443853249:android:42fc5ca7148b5371",
+        "android_client_info": {
+          "package_name": "com.team404.TrackMyDay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1076443853249-4u0b35u8s0ittuckvgfn7npj0vv06dhh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVM1QQ7i-WmmeXvtEMkd7eTXip1ToQgGE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1076443853249:android:820eb859bf4bd2af",
         "android_client_info": {
           "package_name": "com.team404.trackmyday"
         }
       },
       "oauth_client": [
         {
-          "client_id": "954927697414-f5n16mh46senk3b742nasjtur4pc6dgn.apps.googleusercontent.com",
+          "client_id": "1076443853249-k3oc0lnm7jn6la0tgntmginqsuu931i6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.team404.trackmyday",
@@ -21,13 +52,13 @@
           }
         },
         {
-          "client_id": "954927697414-hks2nsc2vfdt99o9uro4kagr6hut1cbj.apps.googleusercontent.com",
+          "client_id": "1076443853249-4u0b35u8s0ittuckvgfn7npj0vv06dhh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDLaAjNDw_CeD_AZeIUSOsE_XhB7XQWSKQ"
+          "current_key": "AIzaSyCVM1QQ7i-WmmeXvtEMkd7eTXip1ToQgGE"
         }
       ],
       "services": {
