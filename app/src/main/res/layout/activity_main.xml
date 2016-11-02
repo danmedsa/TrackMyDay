@@ -57,6 +57,66 @@
         android:layout_marginBottom="20dp"/>
 
     <Button
+        android:text="View Today's Locations"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_view_locations"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="236dp" />
+
+    <Button
+        android:text="View Report"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_view_report"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="236dp" />
+
+    <Button
+        android:text="Manual Ping"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_manual_ping"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="236dp" />
+
+    <Button
+        android:text="Add An Activity"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_input_activity"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="236dp" />
+
+    <Button
+        android:text="Emergency Contacts"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_input_contact"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="236dp" />
+
+    <Button
+        android:text="Activate Emergency"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_activate_emergency"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="236dp" />
+
+    <Button
         android:id="@+id/btn_sign_out"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
