@@ -143,46 +143,7 @@ public class MainActivity extends AppCompatActivity implements
                     .crossFade()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imgProfilePic);
-
-
-//            AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
-//                @Override
-//                protected String doInBackground(Void... params) {
-//                    GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
-//                    AccountManager am = AccountManager.get(getApplicationContext());
-//                    if (ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
-//                        // TODO: Consider calling
-//                        //    ActivityCompat#requestPermissions
-//                        // here to request the missing permissions, and then overriding
-//                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//                        //                                          int[] grantResults)
-//                        // to handle the case where the user grants the permission. See the documentation
-//                        // for ActivityCompat#requestPermissions for more details.
-//                        return "not compat";
-//                    }
-//                    Account[] accounts = am.getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
-//                    String token = null;
-//                    try {
-//                        token = GoogleAuthUtil.getToken(getApplicationContext(), accounts[0].name,
-//                                "954927697414-dnumic2g92hr888fm67venl9kkquiucm.apps.googleusercontent.com");
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    } catch (GoogleAuthException e) {
-//                        e.printStackTrace();
-//                    }
-//                    tokenid = token;
-//                    return token;
-//                }
-//
-//                @Override
-//                protected void onPostExecute(String token) {
-//                    //acctTokenID = token;
-//                    Log.i(TAG, "Access token retrieved:" + token);
-//                }
-//                //E1:52:85:4B:3C:45:06:30:23:B0:4A:25:60:E4:55:0F:81:BF:4C:D2
-//            };
-//            task.execute();
-
+            
             //AWS Cognito
             // Initialize the Amazon Cognito credentials provider
             CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
