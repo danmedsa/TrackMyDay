@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -92,17 +93,30 @@ public class Location extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                
                 locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");           //Collect Date and Time for location
                 dateString = dateFormat.format(new Date());
                 Date date = new Date();
                 time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 
-                coord_view2.setText("\n\nDate: "+dateString+"\n\nTime: "+time);
+                coord_view2.setText("Latitude: "+latitude+"\nLongitude: "+longitude+"\nDate: "+dateString+"\nTime: "+time);
+                Log.d("State","ManualPing");
             }
         });
 
     }
+    //returns latitude
+    private double getLatitude() {
+        return latitude;
+    }
+
+    //returnes longitude
+    private double getLongitude() {
+        return longitude;
+    }
+
+
 
 
 }
