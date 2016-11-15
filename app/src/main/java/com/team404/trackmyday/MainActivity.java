@@ -327,10 +327,9 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void inputActivity(){
-        displayToast("Locations Requested");
-        displayToast("Display Locations");
-        displayToast("Location Selected");
-        displayToast("Activity Added");
+        Intent intent = new Intent(this, AddActivity.class);
+        startActivity(intent);
+
     }
 
     private void triggerManualPing()

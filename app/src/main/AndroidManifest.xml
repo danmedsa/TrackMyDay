@@ -22,16 +22,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Location" ></activity>
-        <activity android:name=".ContactInfo"></activity>
-        
+        <activity android:name=".Location" />
+        <activity android:name=".ContactInfo" />
+
         <service
             android:name=".BackgroundLocation"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+        <service
+            android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
+            android:enabled="true" />
 
-        <service android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService" android:enabled="true" />
-
+        <activity android:name=".AddActivity"></activity>
     </application>
 
 </manifest>
