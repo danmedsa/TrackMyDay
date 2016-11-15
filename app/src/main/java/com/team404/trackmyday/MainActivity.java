@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobileconnectors.cognito.CognitoSyncManager;
@@ -45,11 +47,15 @@ public class MainActivity extends AppCompatActivity implements
     private ProgressDialog mProgressDialog;
 
     private SignInButton btnSignIn;
+    private Button btnSignOut, btnRevokeAccess, btnViewLocations, btnViewReport, btnManualPing;
+    private Button btnAddActivity, btnContact, btnActivateEmergency;
     private Button btnSignOut, btnRevokeAccess,btn_my_location;
     private LinearLayout llProfileLayout;
     private ImageView imgProfilePic;
     private TextView txtName, txtEmail;
     private String tokenid;
+
+    private EmergencyCoordinator emergencyCoordinator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +88,20 @@ public class MainActivity extends AppCompatActivity implements
         // Customizing G+ button
         btnSignIn.setSize(SignInButton.SIZE_STANDARD);
         btnSignIn.setScopes(gso.getScopeArray());
+
+        btnViewLocations = (Button) findViewById(R.id.btn_view_locations);
+        btnViewReport = (Button) findViewById(R.id.btn_view_report);
+        btnManualPing = (Button) findViewById(R.id.btn_manual_ping);
+        btnAddActivity = (Button) findViewById(R.id.btn_input_activity);
+        btnContact = (Button) findViewById(R.id.btn_contacts);
+        btnActivateEmergency = (Button) findViewById(R.id.btn_activate_emergency);
+
+        btnViewLocations.setOnClickListener(this);
+        btnViewReport.setOnClickListener(this);
+        btnManualPing.setOnClickListener(this);
+        btnAddActivity.setOnClickListener(this);
+        btnContact.setOnClickListener(this);
+        btnActivateEmergency.setOnClickListener(this);
     }
 
     private void signIn() {
@@ -226,6 +246,29 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.btn_my_location:
                 goToGoogleMapActivity();
                 break;
+            case R.id.btn_view_locations:
+                viewLocations();
+                break;
+
+            case R.id.btn_view_report:
+                viewReport();
+                break;
+
+            case R.id.btn_manual_ping:
+                triggerManualPing();
+                break;
+
+            case R.id.btn_input_activity:
+                inputActivity();
+                break;
+
+            case R.id.btn_contacts:
+                addContacts();
+                break;
+
+            case R.id.btn_activate_emergency:
+                activateEmergency();
+                break;
         }
     }
 
@@ -303,12 +346,64 @@ public class MainActivity extends AppCompatActivity implements
             btnSignOut.setVisibility(View.VISIBLE);
             btn_my_location.setVisibility(View.VISIBLE);
             llProfileLayout.setVisibility(View.VISIBLE);
+            btnViewLocations.setEnabled(true);             //Make buttons usable when user is signed in
+            btnViewReport.setEnabled(true);
+            btnManualPing.setEnabled(true);
+            btnAddActivity.setEnabled(true);
+            btnContact.setEnabled(true);
+            btnActivateEmergency.setEnabled(true);
         } else {
             btnSignIn.setVisibility(View.VISIBLE);
             btnSignOut.setVisibility(View.GONE);
             btn_my_location.setVisibility(View.GONE);
             llProfileLayout.setVisibility(View.GONE);
+            btnViewLocations.setEnabled(false);             //Make buttons unusable until user is signed in
+            btnViewReport.setEnabled(false);                //Comment out to test without having to sign in
+            btnManualPing.setEnabled(false);
+            btnAddActivity.setEnabled(false);
+            btnContact.setEnabled(false);
+            btnActivateEmergency.setEnabled(false);
         }
+    }
+
+    private void displayToast(String s)
+    {
+        Toast toast = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM,0,0);
+        toast.show();
+    }
+
+    private void viewLocations(){
+        displayToast("Locations Requested");
+        displayToast("Display Locations");
+    }
+
+    private void viewReport(){
+        displayToast("Report Requested");
+        displayToast("Display Report");
+    }
+
+    private void inputActivity(){
+        Intent intent = new Intent(this, AddActivity.class);
+        startActivity(intent);
+
+    }
+
+    private void triggerManualPing()
+    {
+        Intent i = new Intent( MainActivity.this, Location.class);
+        startActivity(i);
+    }
+
+    private void addContacts()
+    {
+        Intent i = new Intent (MainActivity.this, ContactInfo.class);
+        startActivity(i);
+    }
+
+    private void activateEmergency()
+    {
+        displayToast("Emergency Activated");
     }
 
 }

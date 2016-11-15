@@ -64,13 +64,4 @@
         android:visibility="gone"
         android:layout_marginBottom="10dp"/>
 
-    <Button
-        android:id="@+id/btn_my_location"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/my_location"
-        android:visibility="gone"
-        android:layout_marginBottom="10dp"/>
-
-
 </LinearLayout>
