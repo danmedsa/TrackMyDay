@@ -62,9 +62,9 @@
         android:id="@+id/btn_view_locations"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:textColor="@color/colorPrimary"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_width="236dp" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent" />
 
     <Button
         android:text="View Report"
@@ -72,9 +72,9 @@
         android:id="@+id/btn_view_report"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:textColor="@color/colorPrimary"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:layout_width="236dp" />
+        android:layout_width="match_parent" />
 
     <Button
         android:text="Manual Ping"
@@ -82,9 +82,9 @@
         android:id="@+id/btn_manual_ping"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:textColor="@color/colorPrimary"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:layout_width="236dp" />
+        android:layout_width="match_parent" />
 
     <Button
         android:text="Add An Activity"
@@ -92,9 +92,9 @@
         android:id="@+id/btn_input_activity"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:textColor="@color/colorPrimary"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:layout_width="236dp" />
+        android:layout_width="match_parent" />
 
     <Button
         android:text="Emergency Contacts"
@@ -102,9 +102,9 @@
         android:id="@+id/btn_contacts"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:textColor="@color/colorPrimary"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:layout_width="236dp" />
+        android:layout_width="match_parent" />
 
     <Button
         android:text="Activate Emergency"
@@ -112,9 +112,9 @@
         android:id="@+id/btn_activate_emergency"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:textColor="@android:color/holo_red_light"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:layout_width="236dp" />
+        android:layout_width="match_parent" />
 
     <Button
         android:id="@+id/btn_sign_out"
