@@ -6,9 +6,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.IBinder;
 import android.widget.Toast;
-/**
- * Created by Feyi Oyewole on 10/23/2016.
- */
+
 
 
 //Create Service to run locator in background

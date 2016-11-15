@@ -13,9 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-/**
- * Created by Carl Carter on 10/21/2016.
- */
+
 
 public class Location extends AppCompatActivity {
 

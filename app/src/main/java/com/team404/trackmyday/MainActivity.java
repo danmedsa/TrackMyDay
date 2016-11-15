@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements
     private ProgressDialog mProgressDialog;
 
     private SignInButton btnSignIn;
-    private Button btnSignOut, btnRevokeAccess;
+    private Button btnSignOut, btnRevokeAccess,btn_my_location;
     private LinearLayout llProfileLayout;
     private ImageView imgProfilePic;
     private TextView txtName, txtEmail;
@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements
 
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         btnSignOut = (Button) findViewById(R.id.btn_sign_out);
+        btn_my_location= (Button) findViewById(R.id.btn_my_location);
+
         llProfileLayout = (LinearLayout) findViewById(R.id.llProfile);
         imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
         txtName = (TextView) findViewById(R.id.txtName);
@@ -65,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements
 
         btnSignIn.setOnClickListener(this);
         btnSignOut.setOnClickListener(this);
+
+        btn_my_location.setOnClickListener(this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -219,7 +223,18 @@ public class MainActivity extends AppCompatActivity implements
                 signOut();
                 break;
 
+            case R.id.btn_my_location:
+                goToGoogleMapActivity();
+                break;
         }
+    }
+
+    private void goToGoogleMapActivity() {
+
+        Intent i = new Intent(MainActivity.this,MyLocationGoogleMapActivity.class);
+        startActivity(i);
+
+
     }
 
     @Override
@@ -286,10 +301,12 @@ public class MainActivity extends AppCompatActivity implements
         if (isSignedIn) {
             btnSignIn.setVisibility(View.GONE);
             btnSignOut.setVisibility(View.VISIBLE);
+            btn_my_location.setVisibility(View.VISIBLE);
             llProfileLayout.setVisibility(View.VISIBLE);
         } else {
             btnSignIn.setVisibility(View.VISIBLE);
             btnSignOut.setVisibility(View.GONE);
+            btn_my_location.setVisibility(View.GONE);
             llProfileLayout.setVisibility(View.GONE);
         }
     }
