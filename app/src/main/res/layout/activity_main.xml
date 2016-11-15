@@ -99,7 +99,7 @@
     <Button
         android:text="Emergency Contacts"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_input_contact"
+        android:id="@+id/btn_contacts"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:textColor="@color/colorPrimary"
         android:layout_marginLeft="50dp"
