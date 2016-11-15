@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements
     private TextView txtName, txtEmail;
     private String tokenid;
 
+    private EmergencyCoordinator emergencyCoordinator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements
         btnViewReport = (Button) findViewById(R.id.btn_view_report);
         btnManualPing = (Button) findViewById(R.id.btn_manual_ping);
         btnAddActivity = (Button) findViewById(R.id.btn_input_activity);
-        btnContact = (Button) findViewById(R.id.btn_input_contact);
+        btnContact = (Button) findViewById(R.id.btn_contacts);
         btnActivateEmergency = (Button) findViewById(R.id.btn_activate_emergency);
 
         btnViewLocations.setOnClickListener(this);
@@ -143,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements
                     .crossFade()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imgProfilePic);
-            
+
             //AWS Cognito
             // Initialize the Amazon Cognito credentials provider
             CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
@@ -198,13 +200,11 @@ public class MainActivity extends AppCompatActivity implements
                 break;
 
             case R.id.btn_view_locations:
-                requestLocations();
-                displayLocations();
+                viewLocations();
                 break;
 
             case R.id.btn_view_report:
-                requestReport();
-                displayReport();
+                viewReport();
                 break;
 
             case R.id.btn_manual_ping:
@@ -212,21 +212,14 @@ public class MainActivity extends AppCompatActivity implements
                 break;
 
             case R.id.btn_input_activity:
-                requestLocations();
-                displayLocations();
-                selectLocation();
-                addActivity();
+                inputActivity();
                 break;
 
-            case R.id.btn_input_contact:
-                requestContacts();
-                displayContacts();
+            case R.id.btn_contacts:
                 addContacts();
-                updateContacts();
                 break;
 
             case R.id.btn_activate_emergency:
-                requestContacts();
                 activateEmergency();
                 break;
         }
@@ -323,23 +316,21 @@ public class MainActivity extends AppCompatActivity implements
         toast.show();
     }
 
-    private void requestLocations() {
+    private void viewLocations(){
         displayToast("Locations Requested");
-    }
-
-    private void displayLocations()
-    {
         displayToast("Display Locations");
     }
 
-    private void requestReport()
-    {
+    private void viewReport(){
         displayToast("Report Requested");
+        displayToast("Display Report");
     }
 
-    private void displayReport()
-    {
-        displayToast("Display Report");
+    private void inputActivity(){
+        displayToast("Locations Requested");
+        displayToast("Display Locations");
+        displayToast("Location Selected");
+        displayToast("Activity Added");
     }
 
     private void triggerManualPing()
@@ -348,31 +339,10 @@ public class MainActivity extends AppCompatActivity implements
         startActivity(i);
     }
 
-    private void selectLocation() { displayToast("Location Selected"); }
-
-    private void addActivity()
-    {
-        displayToast("Activity Added");
-    }
-
-    private void requestContacts()
-    {
-        displayToast("Contacts Requested");
-    }
-
-    private void displayContacts()
-    {
-        displayToast("Display Contacts");
-    }
-
     private void addContacts()
     {
-        displayToast("Contact Added");
-    }
-
-    private void updateContacts()
-    {
-        displayToast("Contact Updated");
+        Intent i = new Intent (MainActivity.this, ContactInfo.class);
+        startActivity(i);
     }
 
     private void activateEmergency()
