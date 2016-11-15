@@ -111,7 +111,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/btn_activate_emergency"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@android:color/holo_red_light"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="10dp"
         android:layout_width="236dp" />
