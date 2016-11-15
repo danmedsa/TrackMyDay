@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements
         btnViewReport = (Button) findViewById(R.id.btn_view_report);
         btnManualPing = (Button) findViewById(R.id.btn_manual_ping);
         btnAddActivity = (Button) findViewById(R.id.btn_input_activity);
-        btnContact = (Button) findViewById(R.id.btn_contacts);
+        btnContact = (Button) findViewById(R.id.btn_input_contact);
         btnActivateEmergency = (Button) findViewById(R.id.btn_activate_emergency);
 
         btnViewLocations.setOnClickListener(this);
@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements
                 inputActivity();
                 break;
 
-            case R.id.btn_contacts:
+            case R.id.btn_input_contact:
                 addContacts();
                 break;
 
