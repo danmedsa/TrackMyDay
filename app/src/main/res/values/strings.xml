@@ -14,4 +14,6 @@
     <string name="google_maps_api_key">AIzaSyA-qd0iib4AjbUMTk7ivoK2UKdq694KQ7Q</string>
     <string name="google_places_api_key_test">AIzaSyBEC79_DwCkvUIRWNoCq8XIvX1WPvuYWOI</string>
     <string name="google_places_api_key">AIzaSyDjELRDzqzAng0xgILp58qRETi9yjjueic</string>
+    <string name="twilio_SID">ACb0148208ff73cc79ce0d344a8623c5e2</string>
+    <string name="twilio_Auth">007c0dac96738487cd252d27e03906a7</string>
 </resources>
