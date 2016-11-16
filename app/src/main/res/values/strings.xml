@@ -5,15 +5,10 @@
     <!-- Button text -->
     <string name="btn_logout_from_google">Logout from Google</string>
     <string name="loading">Loading...</string>
+    <string name="gps_message">GPS and Google Location Services must be on to use TrackMyDay...</string>
     <string name="btn_revoke_access">Revoke Access</string>
     <string name="android_client_id">954927697414-dnumic2g92hr888fm67venl9kkquiucm.apps.googleusercontent.com</string>
     <string name="web_client_id">954927697414-sfd3dgt0n09rjmq56s0prq7kg0pr9lnc.apps.googleusercontent.com</string>
     <string name="my_location">My location</string>
 
-    <string name="cognito_pool_id">us-east-1:72e0d18f-ef52-4b2d-96e5-e7db7ce0e040</string>
-    <string name="bucket_name">trackmyday-locations</string>
-    <string name="google_maps_api_key_test">AIzaSyBEC79_DwCkvUIRWNoCq8XIvX1WPvuYWOI</string>
-    <string name="google_maps_api_key">AIzaSyA-qd0iib4AjbUMTk7ivoK2UKdq694KQ7Q</string>
-    <string name="google_places_api_key_test">AIzaSyBEC79_DwCkvUIRWNoCq8XIvX1WPvuYWOI</string>
-    <string name="google_places_api_key">AIzaSyDjELRDzqzAng0xgILp58qRETi9yjjueic</string>
 </resources>
