@@ -49,12 +49,10 @@ public class MainActivity extends AppCompatActivity implements
     private SignInButton btnSignIn;
     private Button btnSignOut, btnRevokeAccess, btnViewLocations, btnViewReport, btnManualPing;
     private Button btnAddActivity, btnContact, btnActivateEmergency;
-    private Button btnSignOut, btnRevokeAccess,btn_my_location;
     private LinearLayout llProfileLayout;
     private ImageView imgProfilePic;
     private TextView txtName, txtEmail;
     private String tokenid;
-    private UserSession session;
 
     private EmergencyCoordinator emergencyCoordinator;
 
@@ -65,8 +63,6 @@ public class MainActivity extends AppCompatActivity implements
 
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         btnSignOut = (Button) findViewById(R.id.btn_sign_out);
-        btn_my_location= (Button) findViewById(R.id.btn_my_location);
-
         llProfileLayout = (LinearLayout) findViewById(R.id.llProfile);
         imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
         txtName = (TextView) findViewById(R.id.txtName);
@@ -74,8 +70,6 @@ public class MainActivity extends AppCompatActivity implements
 
         btnSignIn.setOnClickListener(this);
         btnSignOut.setOnClickListener(this);
-
-        btn_my_location.setOnClickListener(this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -152,45 +146,6 @@ public class MainActivity extends AppCompatActivity implements
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imgProfilePic);
 
-
-//            AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
-//                @Override
-//                protected String doInBackground(Void... params) {
-//                    GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
-//                    AccountManager am = AccountManager.get(getApplicationContext());
-//                    if (ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
-//                        // TODO: Consider calling
-//                        //    ActivityCompat#requestPermissions
-//                        // here to request the missing permissions, and then overriding
-//                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//                        //                                          int[] grantResults)
-//                        // to handle the case where the user grants the permission. See the documentation
-//                        // for ActivityCompat#requestPermissions for more details.
-//                        return "not compat";
-//                    }
-//                    Account[] accounts = am.getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
-//                    String token = null;
-//                    try {
-//                        token = GoogleAuthUtil.getToken(getApplicationContext(), accounts[0].name,
-//                                "954927697414-dnumic2g92hr888fm67venl9kkquiucm.apps.googleusercontent.com");
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    } catch (GoogleAuthException e) {
-//                        e.printStackTrace();
-//                    }
-//                    tokenid = token;
-//                    return token;
-//                }
-//
-//                @Override
-//                protected void onPostExecute(String token) {
-//                    //acctTokenID = token;
-//                    Log.i(TAG, "Access token retrieved:" + token);
-//                }
-//                //E1:52:85:4B:3C:45:06:30:23:B0:4A:25:60:E4:55:0F:81:BF:4C:D2
-//            };
-//            task.execute();
-
             //AWS Cognito
             // Initialize the Amazon Cognito credentials provider
             CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
@@ -224,8 +179,6 @@ public class MainActivity extends AppCompatActivity implements
                 }
             });
 
-            session.getInstance(email);
-
             updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
@@ -246,9 +199,6 @@ public class MainActivity extends AppCompatActivity implements
                 signOut();
                 break;
 
-            case R.id.btn_my_location:
-                goToGoogleMapActivity();
-                break;
             case R.id.btn_view_locations:
                 viewLocations();
                 break;
@@ -273,14 +223,6 @@ public class MainActivity extends AppCompatActivity implements
                 activateEmergency();
                 break;
         }
-    }
-
-    private void goToGoogleMapActivity() {
-
-        Intent i = new Intent(MainActivity.this,MyLocationGoogleMapActivity.class);
-        startActivity(i);
-
-
     }
 
     @Override
@@ -347,7 +289,6 @@ public class MainActivity extends AppCompatActivity implements
         if (isSignedIn) {
             btnSignIn.setVisibility(View.GONE);
             btnSignOut.setVisibility(View.VISIBLE);
-            btn_my_location.setVisibility(View.VISIBLE);
             llProfileLayout.setVisibility(View.VISIBLE);
             btnViewLocations.setEnabled(true);             //Make buttons usable when user is signed in
             btnViewReport.setEnabled(true);
@@ -358,7 +299,6 @@ public class MainActivity extends AppCompatActivity implements
         } else {
             btnSignIn.setVisibility(View.VISIBLE);
             btnSignOut.setVisibility(View.GONE);
-            btn_my_location.setVisibility(View.GONE);
             llProfileLayout.setVisibility(View.GONE);
             btnViewLocations.setEnabled(false);             //Make buttons unusable until user is signed in
             btnViewReport.setEnabled(false);                //Comment out to test without having to sign in
