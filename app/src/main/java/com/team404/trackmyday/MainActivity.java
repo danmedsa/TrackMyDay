@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements
     private ProgressDialog mProgressDialog;
 
     private SignInButton btnSignIn;
-    private Button btnSignOut, btnRevokeAccess, btnViewLocations, btnViewReport, btnManualPing;
+    private Button btnSignOut, btnRevokeAccess, btnViewLocations, btnViewReport, btnManualPing,btnViewMyLocation;
     private Button btnAddActivity, btnContact, btnActivateEmergency;
     private LinearLayout llProfileLayout;
     private ImageView imgProfilePic;
@@ -90,13 +90,18 @@ public class MainActivity extends AppCompatActivity implements
         btnAddActivity = (Button) findViewById(R.id.btn_input_activity);
         btnContact = (Button) findViewById(R.id.btn_contacts);
         btnActivateEmergency = (Button) findViewById(R.id.btn_activate_emergency);
+        btnViewMyLocation = (Button) findViewById(R.id.btn_view_my_locations);
 
+
+        btnViewMyLocation.setOnClickListener(this);
         btnViewLocations.setOnClickListener(this);
         btnViewReport.setOnClickListener(this);
         btnManualPing.setOnClickListener(this);
         btnAddActivity.setOnClickListener(this);
         btnContact.setOnClickListener(this);
         btnActivateEmergency.setOnClickListener(this);
+
+
     }
 
     private void signIn() {
@@ -222,7 +227,17 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.btn_activate_emergency:
                 activateEmergency();
                 break;
+            case R.id.btn_view_my_locations:
+                showMyLocation();
+                break;
+
         }
+    }
+
+    private void showMyLocation() {
+
+        Intent i = new Intent(MainActivity.this,GoogleMapsApiLocator.class);
+        startActivity(i);
     }
 
     @Override
@@ -290,6 +305,7 @@ public class MainActivity extends AppCompatActivity implements
             btnSignIn.setVisibility(View.GONE);
             btnSignOut.setVisibility(View.VISIBLE);
             llProfileLayout.setVisibility(View.VISIBLE);
+            btnViewMyLocation.setVisibility(View.VISIBLE);
             btnViewLocations.setEnabled(true);             //Make buttons usable when user is signed in
             btnViewReport.setEnabled(true);
             btnManualPing.setEnabled(true);
@@ -297,6 +313,7 @@ public class MainActivity extends AppCompatActivity implements
             btnContact.setEnabled(true);
             btnActivateEmergency.setEnabled(true);
         } else {
+            btnViewMyLocation.setVisibility(View.VISIBLE);
             btnSignIn.setVisibility(View.VISIBLE);
             btnSignOut.setVisibility(View.GONE);
             llProfileLayout.setVisibility(View.GONE);
@@ -319,6 +336,10 @@ public class MainActivity extends AppCompatActivity implements
     private void viewLocations(){
         displayToast("Locations Requested");
         displayToast("Display Locations");
+
+        Intent i = new Intent(MainActivity.this,GoogleMapsApiLocator.class);
+        startActivity(i);
+
     }
 
     private void viewReport(){

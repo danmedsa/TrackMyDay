@@ -1,5 +1,7 @@
 package com.team404.trackmyday;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -33,5 +35,10 @@ public class LocationEntity {
             temp += 1;
             guessing.put(activity,temp);
         }
+    }
+
+    public LatLng getLocation(){
+
+        return new LatLng(this.latitude,this.longitude);
     }
 }

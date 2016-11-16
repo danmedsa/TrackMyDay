@@ -57,7 +57,7 @@
         android:layout_marginBottom="20dp"/>
 
     <Button
-        android:text="View Today's Locations"
+        android:text="View Todays Location"
         android:layout_height="wrap_content"
         android:id="@+id/btn_view_locations"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
@@ -65,6 +65,18 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent" />
+
+    <Button
+        android:text="View My Location"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_view_my_locations"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textColor="@color/colorPrimary"
+        android:visibility="visible"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent" />
+
 
     <Button
         android:text="View Report"

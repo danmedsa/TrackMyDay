@@ -3,6 +3,7 @@
     <string name="action_settings">Settings</string>
 
     <!-- Button text -->
+    <string name="gps_message">GPS and Google Location Services must be on to use TrackMyDay...</string>
     <string name="btn_logout_from_google">Logout from Google</string>
     <string name="loading">Loading...</string>
     <string name="btn_revoke_access">Revoke Access</string>
