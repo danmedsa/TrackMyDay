@@ -57,20 +57,71 @@
         android:layout_marginBottom="20dp"/>
 
     <Button
+        android:text="View Today's Locations"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_view_locations"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent" />
+
+    <Button
+        android:text="View Report"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_view_report"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent" />
+
+    <Button
+        android:text="Manual Ping"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_manual_ping"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent" />
+
+    <Button
+        android:text="Add An Activity"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_input_activity"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent" />
+
+    <Button
+        android:text="Emergency Contacts"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_contacts"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent" />
+
+    <Button
+        android:text="Activate Emergency"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_activate_emergency"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textColor="@android:color/holo_red_light"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent" />
+
+    <Button
         android:id="@+id/btn_sign_out"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/btn_logout_from_google"
         android:visibility="gone"
         android:layout_marginBottom="10dp"/>
-
-    <Button
-        android:id="@+id/btn_my_location"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/my_location"
-        android:visibility="gone"
-        android:layout_marginBottom="10dp"/>
-
 
 </LinearLayout>
