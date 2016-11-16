@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements
     private ImageView imgProfilePic;
     private TextView txtName, txtEmail;
     private String tokenid;
+    private UserSession session;
 
     private EmergencyCoordinator emergencyCoordinator;
 
@@ -222,6 +223,8 @@ public class MainActivity extends AppCompatActivity implements
                     //Your handler code here
                 }
             });
+
+            session.getInstance(email);
 
             updateUI(true);
         } else {
