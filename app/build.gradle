@@ -21,10 +21,11 @@ android {
     aaptOptions {
         cruncherEnabled = false
     }
+
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -40,7 +41,7 @@ dependencies {
     compile 'com.android.support:multidex:1.0.0'
     compile 'com.google.android.gms:play-services:9.0.0'
     //compile 'com.google.android.gms:play-services:8.1.0'
-    compile 'com.twilio.sdk:twilio:7.1.0'
-    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    //compile 'com.twilio.sdk:twilio:7.1.0'
+    //compile 'com.squareup.okhttp3:okhttp:3.2.0'
 }
 apply plugin: 'com.google.gms.google-services'
