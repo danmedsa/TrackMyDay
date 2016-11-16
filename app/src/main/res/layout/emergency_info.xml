@@ -29,14 +29,15 @@
             android:textStyle="bold"/>
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="textCapWords"
             android:ems="10"
             android:id="@+id/contactName"
             android:layout_marginTop="40dp"
             android:layout_marginLeft="5dp"
-            android:hint="Enter Name" />
+            android:hint="Enter Name"
+            tools:inputType="textCapWords" />
     </LinearLayout>
 
     <LinearLayout
@@ -59,7 +60,7 @@
             android:textSize="16dp"/>
 
         <EditText
-            android:layout_width="214dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:id="@+id/contactPhone"
@@ -75,9 +76,8 @@
         android:id="@+id/btnAdd"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:textColor="@color/colorPrimaryDark"
-        android:layout_marginLeft="75dp"
-        android:layout_marginTop="50dp"
-        android:layout_width="236dp" />
+        android:layout_width="match_parent"
+        android:paddingTop="50dp" />
 
 
 </LinearLayout>

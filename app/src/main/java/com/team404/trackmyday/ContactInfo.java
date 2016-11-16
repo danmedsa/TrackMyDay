@@ -1,5 +1,6 @@
 package com.team404.trackmyday;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -32,6 +33,13 @@ public class ContactInfo extends AppCompatActivity implements View.OnClickListen
         contactName = (EditText) findViewById(R.id.contactName);
         contactPhone = (EditText) findViewById(R.id.contactPhone);
 
+        SharedPreferences settings = getApplicationContext().getSharedPreferences("ContactInfo", 0);
+        String name = settings.getString("Name", "");
+        String numb = settings.getString("Number", "");
+
+        contactName.setText(name);
+        contactPhone.setText(numb);
+
         btnAdd = (Button) findViewById(R.id.btnAdd);
 
         btnAdd.setOnClickListener(this);
@@ -44,8 +52,9 @@ public class ContactInfo extends AppCompatActivity implements View.OnClickListen
 
         switch (id) {
             case R.id.btnAdd:
-                coordinator.setContactName(contactName.getText().toString());
-                coordinator.setContactNumber(contactPhone.getText().toString());
+                //coordinator.setContactName(contactName.getText().toString());
+                //coordinator.setContactNumber(contactPhone.getText().toString());
+                coordinator.storeContact(getApplicationContext(), contactName.getText().toString(),contactPhone.getText().toString());
                 break;
         }
     }

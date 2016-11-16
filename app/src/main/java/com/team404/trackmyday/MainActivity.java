@@ -184,6 +184,8 @@ public class MainActivity extends AppCompatActivity implements
                 }
             });
 
+            emergencyCoordinator = new EmergencyCoordinator();
+
             updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
@@ -367,7 +369,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private void activateEmergency()
     {
-        displayToast("Emergency Activated");
+        emergencyCoordinator.activateEmergency(getApplicationContext());
     }
 
 }
