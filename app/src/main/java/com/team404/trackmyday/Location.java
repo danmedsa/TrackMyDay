@@ -1,5 +1,5 @@
 package com.team404.trackmyday;
-
+//https://track-my-day-a2c6f.firebaseio.com/
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,6 +15,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -105,62 +111,27 @@ public class Location extends AppCompatActivity {
                 Date date = new Date();
                 File path = getApplicationContext().getFilesDir();
 
-
-                //Saves Ping information to ping.txt file
-                File file = new File(path, "ping.txt");
-
-                FileOutputStream stream = null;
-                try {
-                    stream = new FileOutputStream(file);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                try{
-                    stream.write(("["+latitude+", "+longitude+", "+date+", "+time+"]\n").getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    try {
-                        stream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                //Reads ping.txt file (Use for Displaying locations)
-                //Format is [lat, long, date, time]\n
-                int length = (int) file.length();
-
-                byte[] bytes = new byte[length];
-
-                FileInputStream in = null;
-                try {
-                    in = new FileInputStream(file);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    in.read(bytes);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    try {
-                        in.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                String contents = new String(bytes);
+                saveLocationDB();//Saves Ping data to database
 
 
                 time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 
                 coord_view2.setText("Latitude: "+latitude+"\nLongitude: "+longitude+"\nDate: "+dateString+"\nTime: "+time);
-                Log.d("Contents",contents);
+
             }
         });
 
+    }
+
+    private void saveLocationDB(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");           //Collect Date and Time for location
+        dateString = dateFormat.format(new Date());
+        Date date = new Date();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Ping");
+
+        myRef.setValue("["+latitude+", "+longitude+", "+dateString+", "+time+"]");
+        
     }
     //returns latitude
     private double getLatitude() {

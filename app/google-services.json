@@ -1,64 +1,27 @@
 {
   "project_info": {
-    "project_number": "1076443853249",
-    "project_id": "firebase-trackmyday"
+    "project_number": "150338505213",
+    "firebase_url": "https://track-my-day-a2c6f.firebaseio.com",
+    "project_id": "track-my-day-a2c6f",
+    "storage_bucket": "track-my-day-a2c6f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1076443853249:android:42fc5ca7148b5371",
-        "android_client_info": {
-          "package_name": "com.team404.TrackMyDay"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1076443853249-4u0b35u8s0ittuckvgfn7npj0vv06dhh.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCVM1QQ7i-WmmeXvtEMkd7eTXip1ToQgGE"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 1
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1076443853249:android:820eb859bf4bd2af",
+        "mobilesdk_app_id": "1:150338505213:android:820eb859bf4bd2af",
         "android_client_info": {
           "package_name": "com.team404.trackmyday"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1076443853249-k3oc0lnm7jn6la0tgntmginqsuu931i6.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.team404.trackmyday",
-            "certificate_hash": "E152854B3C45063023B04A2560E4550F81BF4CD2"
-          }
-        },
-        {
-          "client_id": "1076443853249-4u0b35u8s0ittuckvgfn7npj0vv06dhh.apps.googleusercontent.com",
+          "client_id": "150338505213-v7mnbgffcikuc5ftc5vf75phihj70ab6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCVM1QQ7i-WmmeXvtEMkd7eTXip1ToQgGE"
+          "current_key": "AIzaSyBZX9jI8lccE4gqDP12qsC_hVxuSWq_iSU"
         }
       ],
       "services": {
@@ -70,7 +33,7 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }
