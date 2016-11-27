@@ -31,6 +31,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements
     private ImageView imgProfilePic;
     private TextView txtName, txtEmail;
     private String tokenid;
+    private DatabaseReference mDatabase;
 
     private EmergencyCoordinator emergencyCoordinator;
 
@@ -126,10 +130,14 @@ public class MainActivity extends AppCompatActivity implements
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
 
+
             Log.e(TAG, "display name: " + acct.getDisplayName());
 
             String personName = acct.getDisplayName();
             String email = acct.getEmail();
+            writeNewUser(email);
+
+
             tokenid = acct.getIdToken();
             String idToken = acct.getIdToken();
             String personPhotoUrl;
@@ -319,12 +327,13 @@ public class MainActivity extends AppCompatActivity implements
             btnSignIn.setVisibility(View.VISIBLE);
             btnSignOut.setVisibility(View.GONE);
             llProfileLayout.setVisibility(View.GONE);
+            /*
             btnViewLocations.setEnabled(false);             //Make buttons unusable until user is signed in
             btnViewReport.setEnabled(false);                //Comment out to test without having to sign in
             btnManualPing.setEnabled(false);
             btnAddActivity.setEnabled(false);
             btnContact.setEnabled(false);
-            btnActivateEmergency.setEnabled(false);
+            btnActivateEmergency.setEnabled(false);*/
         }
     }
 
@@ -370,6 +379,16 @@ public class MainActivity extends AppCompatActivity implements
     private void activateEmergency()
     {
         emergencyCoordinator.activateEmergency(getApplicationContext());
+    }
+
+    private void writeNewUser(String email){
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        User account = new User(email);
+        mDatabase.child("Users").child(email);
+
+        //Pass email to Location
+        Intent i = new Intent(MainActivity.this, Location.class);
+        i.putExtra("Account", email);
     }
 
 }
