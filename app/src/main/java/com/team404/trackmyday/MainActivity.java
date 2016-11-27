@@ -14,11 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amazonaws.auth.CognitoCachingCredentialsProvider;
-import com.amazonaws.mobileconnectors.cognito.CognitoSyncManager;
-import com.amazonaws.mobileconnectors.cognito.Dataset;
-import com.amazonaws.mobileconnectors.cognito.DefaultSyncCallback;
-import com.amazonaws.regions.Regions;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.auth.api.Auth;
@@ -33,11 +28,6 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements
         View.OnClickListener,
@@ -159,38 +149,38 @@ public class MainActivity extends AppCompatActivity implements
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imgProfilePic);
 
-            //AWS Cognito
-            // Initialize the Amazon Cognito credentials provider
-            CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
-                    getApplicationContext(),
-//                "TrackMyDay",
-                    "us-east-1:72e0d18f-ef52-4b2d-96e5-e7db7ce0e040",
-//                "arn:aws:iam::471405578050:role/Cognito_TrackMyDayUnauth",
-//                "arn:aws:iam::471405578050:role/Cognito_TrackMyDayAuth",
-                    Regions.US_EAST_1);
-
-
-            // Initialize the Cognito Sync client
-            CognitoSyncManager syncClient = new CognitoSyncManager(
-                    getApplicationContext(),
-                    Regions.US_EAST_1, // Region
-                    credentialsProvider);
-
-
-
-            Map<String, String> logins = new HashMap<String, String>();
-            logins.put("accounts.google.com", tokenid);
-            credentialsProvider.setLogins(logins);
-
-            // Create a record in a dataset and synchronize with the server
-            Dataset dataset = syncClient.openOrCreateDataset("TrackMyDay");
-            dataset.put("myKey", "myValue");
-            dataset.synchronize(new DefaultSyncCallback() {
-                @Override
-                public void onSuccess(Dataset dataset, List newRecords) {
-                    //Your handler code here
-                }
-            });
+//            //AWS Cognito
+//            // Initialize the Amazon Cognito credentials provider
+//            CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
+//                    getApplicationContext(),
+////                "TrackMyDay",
+//                    "us-east-1:72e0d18f-ef52-4b2d-96e5-e7db7ce0e040",
+////                "arn:aws:iam::471405578050:role/Cognito_TrackMyDayUnauth",
+////                "arn:aws:iam::471405578050:role/Cognito_TrackMyDayAuth",
+//                    Regions.US_EAST_1);
+//
+//
+//            // Initialize the Cognito Sync client
+//            CognitoSyncManager syncClient = new CognitoSyncManager(
+//                    getApplicationContext(),
+//                    Regions.US_EAST_1, // Region
+//                    credentialsProvider);
+//
+//
+//
+//            Map<String, String> logins = new HashMap<String, String>();
+//            logins.put("accounts.google.com", tokenid);
+//            credentialsProvider.setLogins(logins);
+//
+//            // Create a record in a dataset and synchronize with the server
+//            Dataset dataset = syncClient.openOrCreateDataset("TrackMyDay");
+//            dataset.put("myKey", "myValue");
+//            dataset.synchronize(new DefaultSyncCallback() {
+//                @Override
+//                public void onSuccess(Dataset dataset, List newRecords) {
+//                    //Your handler code here
+//                }
+//            });
 
             emergencyCoordinator = new EmergencyCoordinator();
 
