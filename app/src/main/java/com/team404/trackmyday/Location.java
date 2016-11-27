@@ -10,12 +10,16 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -27,7 +31,9 @@ import java.util.Map;
  * Created by Carl Carter on 10/21/2016.
  */
 
+
 public class Location extends AppCompatActivity {
+
 
     private Button track_btn;
     private TextView coord_view, coord_view2;
@@ -120,23 +126,42 @@ public class Location extends AppCompatActivity {
     private void saveLocDB(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");           //Collect Date and Time for location
         dateString = dateFormat.format(new Date());
-        String email = "Test";
-        String Info = latitude+", "+longitude+", "+dateString+", "+time;
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String email = "Test2";
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
         Bundle extras = getIntent().getExtras();
         if (extras != null){
             email = extras.getString("Account");
         }
 
-        DatabaseReference myRef = database.getReference().child("Users").child(email);
-        Map<String, Object> newping = new HashMap<String, Object>();
-        newping.put("Ping", Info);
-        myRef.updateChildren(newping);
-        
+        final DatabaseReference myRef = database.getReference().child("Users").child(email);
+
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+               long pingCount = dataSnapshot.getChildrenCount();
+                //Data pushed to Firebase
+                Map<String, Object> newping = new HashMap<String, Object>();
+                newping.put(String.valueOf(pingCount),latitude+", "+longitude+", "+dateString+", "+time);
+                myRef.updateChildren(newping);
+                Log.d("Children", String.valueOf(pingCount));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
     }
 
-    private String retrieveLocDB(){
 
+
+    private String retrieveLocDB(){
+        //Will implement retrieve after save works correctly
         return "PlaceHodlder";
     }
     //returns latitude
@@ -144,7 +169,7 @@ public class Location extends AppCompatActivity {
         return latitude;
     }
 
-    //returnes longitude
+    //returns longitude
     private double getLongitude() {
         return longitude;
     }
