@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements
 
             String personName = acct.getDisplayName();
             String email = acct.getEmail();
-            writeNewUser(email);
+            writeNewUser(cleanUpEmail(email));
 
 
             tokenid = acct.getIdToken();
@@ -199,6 +199,17 @@ public class MainActivity extends AppCompatActivity implements
             // Signed out, show unauthenticated UI.
             updateUI(false);
         }
+    }
+
+    private String cleanUpEmail(String email) {
+        String temp = "";
+        int i = 0;
+        while(email.charAt(i) != '@'){
+            temp += email.charAt(i);
+            i++;
+        }
+        Log.e("DatabaseKey",temp);
+        return temp;
     }
 
     @Override
@@ -389,6 +400,7 @@ public class MainActivity extends AppCompatActivity implements
         //Pass email to Location
         Intent i = new Intent(MainActivity.this, Location.class);
         i.putExtra("Account", email);
+
     }
 
 }
