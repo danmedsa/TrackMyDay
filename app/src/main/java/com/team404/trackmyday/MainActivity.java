@@ -315,7 +315,7 @@ public class MainActivity extends AppCompatActivity implements
             btnSignIn.setVisibility(View.GONE);
             btnSignOut.setVisibility(View.VISIBLE);
             llProfileLayout.setVisibility(View.VISIBLE);
-            btnViewMyLocation.setVisibility(View.VISIBLE);
+            btnViewMyLocation.setVisibility(View.GONE);
             btnViewLocations.setEnabled(true);             //Make buttons usable when user is signed in
             btnViewReport.setEnabled(true);
             btnManualPing.setEnabled(true);
@@ -323,7 +323,7 @@ public class MainActivity extends AppCompatActivity implements
             btnContact.setEnabled(true);
             btnActivateEmergency.setEnabled(true);
         } else {
-            btnViewMyLocation.setVisibility(View.VISIBLE);
+            btnViewMyLocation.setVisibility(View.GONE);
             btnSignIn.setVisibility(View.VISIBLE);
             btnSignOut.setVisibility(View.GONE);
             llProfileLayout.setVisibility(View.GONE);

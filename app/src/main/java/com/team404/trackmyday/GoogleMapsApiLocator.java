@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -22,24 +23,36 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 
-public class GoogleMapsApiLocator extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener, LocationListener,
-        com.google.android.gms.location.LocationListener {
+public class GoogleMapsApiLocator extends FragmentActivity implements  OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
 
     private GoogleMap mMap;
     private MapView mMapView;
 
-    private LocationRequest locationRequest;
+    //private LocationRequest locationRequest;
 
     private GoogleApiClient mGoogleApiClient;
     public static Location location;
     boolean isFirstloadedmap=false;
 
+    private ArrayList<UserLocationModel> userLocationModelArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +76,9 @@ public class GoogleMapsApiLocator extends FragmentActivity implements GoogleApiC
             e.printStackTrace();
         }
 
-        mMap = mMapView.getMap();
+        //mMap = mMapView.getMap();
+
+        mMapView.getMapAsync(this);
 
 
         //loadLocationonMap();
@@ -74,9 +89,9 @@ public class GoogleMapsApiLocator extends FragmentActivity implements GoogleApiC
 
 
 
-    private void loadLocationonMap() {
+    private void loadLocationonMap(ArrayList<UserLocationModel> userLocationModelArrayList) {
 
-        if (mMap != null) {
+        if (mMap != null && userLocationModelArrayList!=null && userLocationModelArrayList.size()>0) {
 
 
             // InitLocationManager();
@@ -87,11 +102,20 @@ public class GoogleMapsApiLocator extends FragmentActivity implements GoogleApiC
             mMap.getUiSettings().setZoomControlsEnabled(false);
             // map.getUiSettings().setZoomControlsEnabled(isCancelled());//
             // ZoomGesturesEnabled(enabled)RotateGesturesEnabled(false);
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()), 15));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(userLocationModelArrayList.get(0).getLatitude(),userLocationModelArrayList.get(0).getLongitude()), 15));
 
-            mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(),location.getLongitude()))
-                    .icon((BitmapDescriptorFactory
-                            .defaultMarker(BitmapDescriptorFactory.HUE_RED))));
+
+
+            for(int i=0;i<userLocationModelArrayList.size();i++){
+
+                mMap.addMarker(new MarkerOptions().position(new LatLng(userLocationModelArrayList.get(i).getLatitude(),userLocationModelArrayList.get(i).getLongitude()))
+                        .icon((BitmapDescriptorFactory
+                                .defaultMarker(BitmapDescriptorFactory.HUE_RED))));
+
+
+            }
+
+
         }
 
 
@@ -171,28 +195,7 @@ public class GoogleMapsApiLocator extends FragmentActivity implements GoogleApiC
     public void onConnected(@Nullable Bundle bundle) {
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
 
-            locationRequest = LocationRequest.create();
-            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-            locationRequest.setInterval(1000 * 5);
-            locationRequest.setFastestInterval(5);
-            // locationClient.requestLocationUpdates(request,
-            // listener)ionUpdates(locationRequest,
-            // DriverLocationFragment.this);
-            //       locationClient.requestLocationUpdates(locationRequest,
-            //   DriverLocationFragment.this);
-            if (ActivityCompat.checkSelfPermission(GoogleMapsApiLocator.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            LocationServices.FusedLocationApi.requestLocationUpdates(
-                    mGoogleApiClient, locationRequest, this);
-
+//
         }
     }
 
@@ -201,110 +204,8 @@ public class GoogleMapsApiLocator extends FragmentActivity implements GoogleApiC
 
     }
 
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+//
 
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-
-
-
-
-        if (location != null) {
-
-            GoogleMapsApiLocator.location=location;
-
-            if(mMap!=null){
-                //mMap.clear();
-
-                if(!isFirstloadedmap){
-                    isFirstloadedmap=true;
-                    mMap.clear();
-
-                    loadLocationonMap();
-                }
-
-
-
-
-            }
-
-
-
-            GoogleMapsApiLocator.location = location;
-            float acc = location.getAccuracy();
-            // Toast.makeText(getActivity(), String.valueOf(acc),
-            // Toast.LENGTH_LONG).show();
-            if (acc <= 50) {
-
-
-            } else {
-                try {
-                    LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-                    if (mGoogleApiClient != null && mGoogleApiClient.isConnected() && locationRequest != null) {
-                        Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (mGoogleApiClient != null && mGoogleApiClient.isConnected() && locationRequest != null) {
-                                    if (ActivityCompat.checkSelfPermission(GoogleMapsApiLocator.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(GoogleMapsApiLocator.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                                        // TODO: Consider calling
-                                        //    ActivityCompat#requestPermissions
-                                        // here to request the missing permissions, and then overriding
-                                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                        //                                          int[] grantResults)
-                                        // to handle the case where the user grants the permission. See the documentation
-                                        // for ActivityCompat#requestPermissions for more details.
-                                        return;
-                                    }
-                                    LocationServices.FusedLocationApi.requestLocationUpdates(
-                                            mGoogleApiClient, locationRequest, GoogleMapsApiLocator.this);
-                                }
-                            }
-                        }, 50000);
-
-                    }
-                } catch (Exception ex) {
-                }
-            }
-        }else if(GoogleMapsApiLocator.location!=null){
-
-
-            if(mMap!=null){
-                //mMap.clear();
-
-                if(!isFirstloadedmap){
-                    isFirstloadedmap=true;
-                    mMap.clear();
-
-                    loadLocationonMap();
-                }
-
-
-
-
-            }
-
-        }
-
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
 
     private void startLocationService()
     {
@@ -328,5 +229,103 @@ public class GoogleMapsApiLocator extends FragmentActivity implements GoogleApiC
         startLocationService();
     }
 
+    //Method to read from firebase db//
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        String email = "Test2";
+        mMap = googleMap;
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            email = extras.getString("Account");
+        }
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference().child("Users").child(email);
+
+
+        userLocationModelArrayList=new ArrayList<>();
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+
+                for(DataSnapshot dsp : dataSnapshot.getChildren()){
+                    UserLocationModel users =dsp.getValue(UserLocationModel.class);
+                    userLocationModelArrayList.add(users); //add result into array list
+                }
+
+
+
+
+                for(int i =0;i<userLocationModelArrayList.size();i++){
+
+                   Date dbsavedDate = GetFormatedtDateWithDateYearMonthTime(userLocationModelArrayList.get(i).getDateString());
+
+                    int dbMonth=dbsavedDate.getMonth();
+                    int dbyear=dbsavedDate.getYear();
+                    int dbdate=dbsavedDate.getDate();
+
+
+                    Date currentdate = new Date();
+
+                    if(dbMonth==currentdate.getMonth() && dbdate==currentdate.getDate()&& dbyear==currentdate.getYear()){
+
+                    }else{
+                        userLocationModelArrayList.remove(i);
+                    }
+
+
+
+
+
+
+
+
+                }
+
+
+
+
+
+
+
+                loadLocationonMap(userLocationModelArrayList);
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                //  Log.e(TAG, "Failed to read user", error.toException());
+            }
+        });
+
+
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+
+
+    public  Date GetFormatedtDateWithDateYearMonthTime(String date) {
+        Date dataFrom = new Date();
+        try {
+            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+
+            dataFrom = df.parse(date);
+        } catch (Exception ex) {
+            Log.w("Exception", ex.getMessage());
+        }
+
+        return dataFrom;
+
+    }
 }
