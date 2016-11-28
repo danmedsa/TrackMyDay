@@ -1,8 +1,11 @@
 package com.team404.trackmyday;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -10,6 +13,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -21,6 +26,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,9 +34,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 
 public class GoogleMapsApiLocator extends FragmentActivity implements  OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -86,7 +95,7 @@ public class GoogleMapsApiLocator extends FragmentActivity implements  OnMapRead
 
         if (mMap != null && userLocationModelArrayList!=null && userLocationModelArrayList.size()>0) {
 
-
+            mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
             // InitLocationManager();
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
             mMap.getUiSettings().setCompassEnabled(true);
@@ -101,7 +110,7 @@ public class GoogleMapsApiLocator extends FragmentActivity implements  OnMapRead
 
             for(int i=0;i<userLocationModelArrayList.size();i++){
 
-                mMap.addMarker(new MarkerOptions().position(new LatLng(userLocationModelArrayList.get(i).getLatitude(),userLocationModelArrayList.get(i).getLongitude()))
+                mMap.addMarker(new MarkerOptions().position(new LatLng(userLocationModelArrayList.get(i).getLatitude(),userLocationModelArrayList.get(i).getLongitude())).title(getAddress1(GoogleMapsApiLocator.this,userLocationModelArrayList.get(i).getLatitude(),userLocationModelArrayList.get(i).getLongitude()))
                         .icon((BitmapDescriptorFactory
                                 .defaultMarker(BitmapDescriptorFactory.HUE_RED))));
 
@@ -225,7 +234,7 @@ public class GoogleMapsApiLocator extends FragmentActivity implements  OnMapRead
     //Method to read from firebase db//
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        String email = "Test2";
+        String email = "Group";
         mMap = googleMap;
 
         Bundle extras = getIntent().getExtras();
@@ -332,4 +341,74 @@ public class GoogleMapsApiLocator extends FragmentActivity implements  OnMapRead
         Log.e("DatabaseKey",temp);
         return temp;
     }
+
+    public static String getAddress1(Context context, double lat, double lng) {
+
+        String add = "";
+        try {
+            Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+            if (geocoder != null) {
+                List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
+                if (addresses != null && addresses.size() > 0) {
+                    Address obj = addresses.get(0);
+                    add = obj.getAddressLine(0) + " " + obj.getLocality();
+                    // add = add + "\n" + obj.getPaName();
+                    add = add + "\n" + obj.getCountryCode();
+                    add = add + "," + obj.getAdminArea();
+                    add = add + "\n" + obj.getPostalCode();
+                    // add = add + "," + obj.getSubAdminArea();
+                    // add = add + "," + obj.getLocality();
+                    // add = add + "\n" + obj.getSubThoroughfare();
+                    // Constants.masjids.setProvince(obj.getAdminArea());
+                    // Constants.masjids.setTown(obj.getSubAdminArea());
+                    // Constants.masjids.setCountry(obj.getCountryName());
+
+                    add = add.replaceAll("null", "");
+                }
+            }
+            Log.v("IGA", "Address" + add);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Toast.makeText(getActivity(), e.getMessage(),
+            // Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return add;
+
+    }
+
+
+
+
+    class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
+
+        private final View myContentsView;
+
+        MyInfoWindowAdapter(){
+            myContentsView = getLayoutInflater().inflate(R.layout.custom_window_marker, null);
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+
+            TextView tvTitle = ((TextView)myContentsView.findViewById(R.id.title));
+            tvTitle.setText(marker.getTitle());
+            TextView tvSnippet = ((TextView)myContentsView.findViewById(R.id.snippet));
+            tvSnippet.setText(marker.getSnippet());
+
+            return myContentsView;
+        }
+
+        @Override
+        public View getInfoWindow(Marker marker) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+    }
+
+
+
+
 }

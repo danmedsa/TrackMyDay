@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TRackMyDay.iml" filepath="$PROJECT_DIR$/TRackMyDay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FTMD.iml" filepath="$PROJECT_DIR$/FTMD.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
