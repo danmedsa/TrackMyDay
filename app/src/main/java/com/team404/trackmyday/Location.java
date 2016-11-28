@@ -124,9 +124,6 @@ public class Location extends AppCompatActivity implements GoogleApiClient.Conne
 
             @Override
             public void onClick(View v) {
-
-
-
                 if (ActivityCompat.checkSelfPermission(Location.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(Location.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
                     //    ActivityCompat#requestPermissions
@@ -143,14 +140,9 @@ public class Location extends AppCompatActivity implements GoogleApiClient.Conne
                 Date date = new Date();
                 File path = getApplicationContext().getFilesDir();
 
-
-
-
                 time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 
                 coord_view2.setText("Latitude: "+latitude+"\nLongitude: "+longitude+"\nDate: "+dateString+"\nTime: "+time);
-
-
 
                 if(userlocation==null){
                     return;
@@ -166,7 +158,7 @@ public class Location extends AppCompatActivity implements GoogleApiClient.Conne
     private void saveLocDB(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");           //Collect Date and Time for location
         dateString = dateFormat.format(new Date());
-        String email = "Test2";
+        String email = "Group";
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         Bundle extras = getIntent().getExtras();

@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private SignInButton btnSignIn;
     private Button btnSignOut, btnRevokeAccess, btnViewLocations, btnViewReport, btnManualPing,btnViewMyLocation;
-    private Button btnAddActivity, btnContact, btnActivateEmergency;
+    private Button btnAppUsage, btnAddActivity, btnContact, btnActivateEmergency;
     private LinearLayout llProfileLayout;
     private ImageView imgProfilePic;
     private TextView txtName, txtEmail;
@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements
         btnViewLocations = (Button) findViewById(R.id.btn_view_locations);
         btnViewReport = (Button) findViewById(R.id.btn_view_report);
         btnManualPing = (Button) findViewById(R.id.btn_manual_ping);
+        btnAppUsage = (Button) findViewById(R.id.btn_app_usage);
         btnAddActivity = (Button) findViewById(R.id.btn_input_activity);
         btnContact = (Button) findViewById(R.id.btn_contacts);
         btnActivateEmergency = (Button) findViewById(R.id.btn_activate_emergency);
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements
         btnViewLocations.setOnClickListener(this);
         btnViewReport.setOnClickListener(this);
         btnManualPing.setOnClickListener(this);
+        btnAppUsage.setOnClickListener(this);
         btnAddActivity.setOnClickListener(this);
         btnContact.setOnClickListener(this);
         btnActivateEmergency.setOnClickListener(this);
@@ -225,6 +227,9 @@ public class MainActivity extends AppCompatActivity implements
 
             case R.id.btn_manual_ping:
                 triggerManualPing();
+                break;
+            case R.id.btn_app_usage:
+                appUsage();
                 break;
 
             case R.id.btn_input_activity:
@@ -367,7 +372,12 @@ public class MainActivity extends AppCompatActivity implements
 
     private void triggerManualPing()
     {
-        Intent i = new Intent( MainActivity.this, Location.class);
+        Intent i = new Intent(MainActivity.this, Location.class);
+        startActivity(i);
+    }
+
+    private void appUsage(){
+        Intent i = new Intent(MainActivity.this,AppUsage.class);
         startActivity(i);
     }
 

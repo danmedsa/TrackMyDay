@@ -99,6 +99,16 @@
         android:layout_width="match_parent" />
 
     <Button
+        android:text="Application Usage"
+        android:id="@+id/btn_app_usage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"/>
+
+    <Button
         android:text="Add An Activity"
         android:layout_height="wrap_content"
         android:id="@+id/btn_input_activity"
