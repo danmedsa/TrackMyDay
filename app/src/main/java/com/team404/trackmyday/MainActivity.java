@@ -362,8 +362,8 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void viewReport(){
-        displayToast("Report Requested");
-        displayToast("Display Report");
+        Intent i = new Intent(this, ReportActivity.class);
+        startActivity(i);
     }
 
     private void inputActivity(){
