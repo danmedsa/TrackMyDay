@@ -29,20 +29,16 @@
         <activity android:name=".AppUsage" />
         <activity android:name=".ContactInfo" />
 
-
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true" />
 
-        <activity android:name=".AddActivity"></activity>
-
-
-        <activity android:name=".GoogleMapsApiLocator"></activity>
+        <activity android:name=".AddActivity" />
+        <activity android:name=".GoogleMapsApiLocator" />
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAcIBtDlguHncWPS52XHi6VXTDXHYIntSk" />
@@ -50,8 +46,11 @@
         <service
             android:name=".LocationService"
             android:enabled="true"
-            android:exported="true" >
-        </service>
+            android:exported="true"></service>
+        <service
+            android:name=".Background"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

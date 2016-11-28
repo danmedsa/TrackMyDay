@@ -97,6 +97,8 @@ public class MainActivity extends AppCompatActivity implements
         btnContact.setOnClickListener(this);
         btnActivateEmergency.setOnClickListener(this);
 
+        Intent serviceintent = new Intent(this, Background.class);
+        startService(serviceintent);
 
     }
 
