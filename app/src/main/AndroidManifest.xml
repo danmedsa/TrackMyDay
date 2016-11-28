@@ -28,6 +28,7 @@
         <activity android:name=".Location" />
         <activity android:name=".AppUsage" />
         <activity android:name=".ContactInfo" />
+        <activity android:name=".ReportActivity"/>
 
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
