@@ -155,7 +155,7 @@ public class Location extends AppCompatActivity implements GoogleApiClient.Conne
 
     }
 
-    private void saveLocDB(){
+    public void saveLocDB(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");           //Collect Date and Time for location
         dateString = dateFormat.format(new Date());
         String email = "Group";
@@ -214,12 +214,12 @@ public class Location extends AppCompatActivity implements GoogleApiClient.Conne
         return "PlaceHodlder";
     }
     //returns latitude
-    private double getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
     //returns longitude
-    private double getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
