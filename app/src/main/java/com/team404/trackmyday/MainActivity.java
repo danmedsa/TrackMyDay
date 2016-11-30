@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements
     private TextView txtName, txtEmail;
     private String tokenid;
     private DatabaseReference mDatabase;
+    private UserSession session;
 
     private EmergencyCoordinator emergencyCoordinator;
 
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        session = UserSession.getInstance();
 
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         btnSignOut = (Button) findViewById(R.id.btn_sign_out);
@@ -98,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements
         btnActivateEmergency.setOnClickListener(this);
 
         Intent serviceintent = new Intent(this, Background.class);
-        startService(serviceintent);
+        //startService(serviceintent);
 
     }
 
@@ -129,6 +132,8 @@ public class MainActivity extends AppCompatActivity implements
 
             String personName = acct.getDisplayName();
             String email = acct.getEmail();
+            session.setUser(email);
+            Log.e("UserSession: ", email);
             writeNewUser(cleanUpEmail(email));
 
 

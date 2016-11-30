@@ -53,6 +53,9 @@ public class GoogleMapsApiLocator extends FragmentActivity implements  OnMapRead
     private GoogleApiClient mGoogleApiClient;
     public static Location location;
     boolean isFirstloadedmap=false;
+    boolean selectingActivity = false;
+    double selected_lat;
+    double selected_lon;
 
     private ArrayList<UserLocationModel> userLocationModelArrayList;
 
@@ -61,6 +64,13 @@ public class GoogleMapsApiLocator extends FragmentActivity implements  OnMapRead
         super.onCreate(savedInstanceState);
         setContentView(R.layout.google_maps_api_locator);
         initMap(savedInstanceState);
+
+        String intent = getIntent().getStringExtra("caller");
+        if(intent.equals("AddActivity")){
+            selectingActivity = true;
+        }else{
+            selectingActivity = false;
+        }
 
         stopLocationService();
     }
@@ -117,6 +127,26 @@ public class GoogleMapsApiLocator extends FragmentActivity implements  OnMapRead
 
             }
 
+            if(selectingActivity == true) {
+                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+
+                        selected_lat = marker.getPosition().latitude;
+                        selected_lon = marker.getPosition().longitude;
+                        marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                        Intent intent = new Intent(getApplicationContext(), AddActivity.class);
+                        intent.putExtra("lat", selected_lat);
+                        intent.putExtra("lon", selected_lon);
+                        intent.putExtra("caller", "GoogleMap");
+                        startActivity(intent);
+                        finish();
+                        return false;
+
+                    }
+                });
+            }
 
         }
 
@@ -234,16 +264,16 @@ public class GoogleMapsApiLocator extends FragmentActivity implements  OnMapRead
     //Method to read from firebase db//
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        String email = "Group";
+        String email = "Group@";
         mMap = googleMap;
 
         Bundle extras = getIntent().getExtras();
         if (extras != null){
             email = extras.getString("Account");
         }
-
+        email = "Group@";
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference().child("Users").child(email);
+        final DatabaseReference myRef = database.getReference().child("Users").child(cleanUpEmail(email));
 
 
         userLocationModelArrayList=new ArrayList<>();
@@ -332,6 +362,8 @@ public class GoogleMapsApiLocator extends FragmentActivity implements  OnMapRead
     }
 
     private String cleanUpEmail(String email) {
+        Log.e("DatabaseKey",email);
+
         String temp = "";
         int i = 0;
         while(email.charAt(i) != '@'){

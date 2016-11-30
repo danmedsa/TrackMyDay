@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FTMD.iml" filepath="$PROJECT_DIR$/FTMD.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TrackMyDay.iml" filepath="$PROJECT_DIR$/TrackMyDay.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
