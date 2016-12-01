@@ -282,15 +282,10 @@ public class GoogleMapsApiLocator extends FragmentActivity implements  OnMapRead
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-
-
                 for(DataSnapshot dsp : dataSnapshot.getChildren()){
                     UserLocationModel users =dsp.getValue(UserLocationModel.class);
                     userLocationModelArrayList.add(users); //add result into array list
                 }
-
-
-
 
                 for(int i =0;i<userLocationModelArrayList.size();i++){
 
@@ -308,25 +303,8 @@ public class GoogleMapsApiLocator extends FragmentActivity implements  OnMapRead
                     }else{
                         userLocationModelArrayList.remove(i);
                     }
-
-
-
-
-
-
-
-
                 }
-
-
-
-
-
-
-
                 loadLocationonMap(userLocationModelArrayList);
-
-
             }
 
             @Override

@@ -8,9 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class AddActivity extends AppCompatActivity implements
         View.OnClickListener {
@@ -72,6 +78,52 @@ public class AddActivity extends AppCompatActivity implements
 
             case R.id.addActivityBtn:
                 //TODO add in database
+
+                Intent intent1 = getIntent();
+                if(intent1 != null){
+                    String caller = intent1.getStringExtra("caller");
+                    if(caller != null){
+                        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        final DatabaseReference myRef = database.getReference().child("Users").child("Group");//session.getUser());
+
+                        final ArrayList<UserLocationModel> userLocationModelArrayList=new ArrayList<UserLocationModel>();
+
+                        myRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                UserLocationModel selected;
+
+                                for(DataSnapshot dsp : dataSnapshot.getChildren()){
+                                    UserLocationModel users =dsp.getValue(UserLocationModel.class);
+                                    userLocationModelArrayList.add(users); //add result into array list
+                                }
+                                String actName = String.valueOf(activity.getText());
+                                UserActivity act = new UserActivity(actName);
+
+                                for(UserLocationModel loc: userLocationModelArrayList){
+                                    if(loc.getLatitude() == lat && loc.getLongitude() == lon){
+                                        loc.addActivities(act);
+
+                                        String userId = myRef.push().getKey();
+                                        UserLocationModel users = loc;
+                                        myRef.child(userId).setValue(users);
+                                    }
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError error) {
+                                // Failed to read value
+                                //  Log.e(TAG, "Failed to read user", error.toException());
+                            }
+                        });
+                    }else{
+                        Toast.makeText(this, "Select A Location first",Toast.LENGTH_SHORT);
+                    }
+                }
+
                 break;
         }
     }
