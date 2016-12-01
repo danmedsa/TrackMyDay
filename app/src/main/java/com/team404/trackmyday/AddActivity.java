@@ -65,7 +65,8 @@ public class AddActivity extends AppCompatActivity implements
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-        String email = session.getUser();
+        //String email = session.getUser();
+        String email = "Group@";
         final DatabaseReference myRef = database.getReference().child("Users").child(cleanUpEmail(email));
     }
 
