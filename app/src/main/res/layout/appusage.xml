@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <Button
-        android:text="Clear"
+        android:text="Refresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/foreground_btn" />
@@ -13,5 +13,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/appname_display" />
+        android:id="@+id/appname_display"
+        android:textSize="20dp"
+        android:gravity="center"/>
 </LinearLayout>

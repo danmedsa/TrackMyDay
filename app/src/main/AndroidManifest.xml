@@ -10,6 +10,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
+    <uses-permission android:name="android.permission.KEYGUARD_SERVICE" />
+    <uses-permission android:name="android.permission.ACTIVITY_SERVICE" />
+
+
 
     <application
         android:name=".MultidexApplication"
@@ -28,7 +32,7 @@
         <activity android:name=".Location" />
         <activity android:name=".AppUsage" />
         <activity android:name=".ContactInfo" />
-        <activity android:name=".ReportActivity"/>
+        <activity android:name=".ReportActivity" />
 
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
@@ -47,9 +51,13 @@
         <service
             android:name=".LocationService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
         <service
             android:name=".Background"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".DeviceUptime"
             android:enabled="true"
             android:exported="true"></service>
     </application>

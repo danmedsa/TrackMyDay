@@ -24,10 +24,11 @@ public class Background extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("Recieve","Background");
+       // Log.d("Recieve","Background");
         Timer t = new Timer();
 
         if(intent.getStringExtra("UpdateCoor").equals("Change")){
+            //Log.d("Update", "New Coordinates");
             lat = Double.parseDouble(intent.getStringExtra("latitude"));
             lon = Double.parseDouble(intent.getStringExtra("longitude"));
             UpdateCoordinates(lat, lon);

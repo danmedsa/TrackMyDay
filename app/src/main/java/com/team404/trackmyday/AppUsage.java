@@ -4,6 +4,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -39,8 +40,15 @@ public class AppUsage extends AppCompatActivity {
         foreground_btn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                Log.d("Click", "Button Push");
-                appname_display.setText("");
+                long milliUptime = SystemClock.uptimeMillis();
+                long secUptime = milliUptime/1000;
+                long minUptime = secUptime/60;
+                long hourUptime = minUptime/60;
+                long dayUptime = hourUptime/24;
+                appname_display.setText(Long.toString(secUptime)+" Active Phone Usage In Seconds\n"+
+                        Long.toString(minUptime)+ " Active Phone Usage in Minutes\n"+
+                        Long.toString(hourUptime)+ " Active Phone Usage in Hours\n"+
+                        Long.toString(dayUptime)+ " Active Phone Usage in Days\n");
 
             }
         });

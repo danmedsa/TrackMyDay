@@ -100,11 +100,12 @@ public class MainActivity extends AppCompatActivity implements
         btnContact.setOnClickListener(this);
         btnActivateEmergency.setOnClickListener(this);
 
-
+        //Background Ping Timer Service START
         Intent serviceIntent = new Intent(this, Background.class);
         serviceIntent.putExtra("latitude", "NULL");
         serviceIntent.putExtra("longitude", "NULL");
         serviceIntent.putExtra("UpdateCoor", "Keep");
+        //Log.d("Pass", "MainActivity");
         startService(serviceIntent);
 
     }
