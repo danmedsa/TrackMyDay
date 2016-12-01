@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements
 
     private EmergencyCoordinator emergencyCoordinator;
 
+    public String email= "NULL";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,14 +102,6 @@ public class MainActivity extends AppCompatActivity implements
         btnContact.setOnClickListener(this);
         btnActivateEmergency.setOnClickListener(this);
 
-        //Background Ping Timer Service START
-        Intent serviceIntent = new Intent(this, Background.class);
-        serviceIntent.putExtra("latitude", "NULL");
-        serviceIntent.putExtra("longitude", "NULL");
-        serviceIntent.putExtra("UpdateCoor", "Keep");
-        //Log.d("Pass", "MainActivity");
-        startService(serviceIntent);
-
     }
 
     private void signIn() {
@@ -136,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements
             Log.e(TAG, "display name: " + acct.getDisplayName());
 
             String personName = acct.getDisplayName();
-            String email = acct.getEmail();
+            email = acct.getEmail();
             session.setUser(email);
             Log.e("UserSession: ", email);
             writeNewUser(cleanUpEmail(email));
@@ -385,6 +379,7 @@ public class MainActivity extends AppCompatActivity implements
     private void triggerManualPing()
     {
         Intent i = new Intent(MainActivity.this, Location.class);
+        i.putExtra("Account", email);
         startActivity(i);
     }
 
@@ -408,10 +403,6 @@ public class MainActivity extends AppCompatActivity implements
         mDatabase = FirebaseDatabase.getInstance().getReference();
         User account = new User(email);
         mDatabase.child("Users").child(email);
-
-        //Pass email to Location
-        Intent i = new Intent(MainActivity.this, Location.class);
-        i.putExtra("Account", email);
 
     }
 

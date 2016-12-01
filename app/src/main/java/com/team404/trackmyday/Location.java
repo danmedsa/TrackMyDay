@@ -65,6 +65,12 @@ public class Location extends AppCompatActivity implements GoogleApiClient.Conne
         coord_view = (TextView) findViewById(R.id.coord_view);
         coord_view2 = (TextView) findViewById(R.id.coord_view2); //Button Creation
 
+        //Background Ping Timer Service START
+        Intent serviceIntent = new Intent(this, Background.class);
+        serviceIntent.putExtra("UpdateCoor", "Keep");
+        //Log.d("Pass", "MainActivity");
+        startService(serviceIntent);
+
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
@@ -170,12 +176,15 @@ public class Location extends AppCompatActivity implements GoogleApiClient.Conne
     public void saveLocDB(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");           //Collect Date and Time for location
         dateString = dateFormat.format(new Date());
-        String email = "Group";
+        String email = "Guest";
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         Bundle extras = getIntent().getExtras();
-        if (extras != null){
+        if (extras.getString("Account") != "Null" && extras.getString("Account") != "NULL"){
             email = extras.getString("Account");
+            Log.d("Account", email);
+        }else{
+            email = "Guest";
         }
 
         final DatabaseReference myRef = database.getReference().child("Users").child(email);

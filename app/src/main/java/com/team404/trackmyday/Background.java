@@ -18,7 +18,7 @@ public class Background extends Service {
     private String userId;
     private String dateString, time;
     private double lat, lon;
-    public int Uptime = 0;
+    String email;
     public Background() {
     }
 
@@ -26,6 +26,12 @@ public class Background extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
        // Log.d("Recieve","Background");
         Timer t = new Timer();
+
+        if(intent.getStringExtra("Email") == null){
+            email = "Guest";
+        }else{
+            email = intent.getStringExtra("Email");
+        }
 
         if(intent.getStringExtra("UpdateCoor").equals("Change")){
             //Log.d("Update", "New Coordinates");
@@ -42,7 +48,8 @@ public class Background extends Service {
                                           Date date = new Date();
                                           dateString = dateFormat.format(new Date());
                                           time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-                                          String email = "Background Ping Test";
+
+
 
                                           final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
