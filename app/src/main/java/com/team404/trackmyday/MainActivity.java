@@ -372,7 +372,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void viewReport(){
-        Intent i = new Intent(this, ReportActivity.class);
+        Intent i = new Intent(this, ReportOptionsActivity.class);
         startActivity(i);
     }
 
