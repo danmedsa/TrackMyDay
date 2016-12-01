@@ -55,6 +55,15 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"/>
+    <Button
+        android:text="Manual Ping"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_manual_ping"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent" />
 
     <Button
         android:text="View today’s locations"
@@ -88,15 +97,6 @@
         android:layout_marginTop="10dp"
         android:layout_width="match_parent" />
 
-    <Button
-        android:text="Manual Ping"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_manual_ping"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:textColor="@color/colorPrimary"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent" />
 
     <Button
         android:text="Phone Uptime"
