@@ -31,7 +31,7 @@ public class AppUsage extends AppCompatActivity {
         foreground_btn = (Button) findViewById(R.id.foreground_btn);
         appname_display = (TextView) findViewById(R.id.appname_display);
 
-        AppPackages();
+        //AppPackages();
         configureButton();
     }
 

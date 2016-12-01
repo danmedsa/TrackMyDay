@@ -1,5 +1,4 @@
 package com.team404.trackmyday;
-//https://track-my-day-a2c6f.firebaseio.com/
 
 import android.*;
 import android.Manifest;
@@ -74,6 +73,9 @@ public class Location extends AppCompatActivity implements GoogleApiClient.Conne
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
                 coord_view.append("\n " + latitude + " " + longitude); //Updates when GPS pings new location
+
+                UpdateBackground();
+
             }
 
 
@@ -117,6 +119,16 @@ public class Location extends AppCompatActivity implements GoogleApiClient.Conne
                     configureButton();
                 return;
         }
+    }
+
+    private void UpdateBackground(){
+        //Pass updating Location to Background Service
+        Intent serviceIntent = new Intent(this, Background.class);
+        serviceIntent.putExtra("latitude", Double.toString(latitude));
+        serviceIntent.putExtra("longitude", Double.toString(longitude));
+        serviceIntent.putExtra("UpdateCoor", "Change");
+        Log.d("Pass" ,"Location");
+        startService(serviceIntent);
     }
 
     private void configureButton() {
@@ -207,12 +219,6 @@ public class Location extends AppCompatActivity implements GoogleApiClient.Conne
 
     }
 
-
-
-    private String retrieveLocDB(){
-        //Will implement retrieve after save works correctly
-        return "PlaceHodlder";
-    }
     //returns latitude
     public double getLatitude() {
         return latitude;
