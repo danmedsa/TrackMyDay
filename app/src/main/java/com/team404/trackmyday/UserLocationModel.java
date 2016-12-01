@@ -1,7 +1,5 @@
 package com.team404.trackmyday;
 
-import java.util.ArrayList;
-
 /**
  * Created by Feyi Oyewole on 11/26/16.
  */
@@ -12,7 +10,8 @@ public class UserLocationModel {
     private double latitude;
     private double longitude;
     private String dateString;
-    private ArrayList<UserActivity> activityList;
+    private UserActivity activityList;
+    private String name;
     private String time;
 
     public UserLocationModel(double latitude, double longitude, String dateString, String time) {
@@ -20,7 +19,6 @@ public class UserLocationModel {
         this.longitude = longitude;
         this.dateString = dateString;
         this.time = time;
-        this.activityList = new ArrayList<UserActivity>();
     }
 
 
@@ -61,11 +59,19 @@ public class UserLocationModel {
         this.time = time;
     }
 
-    public void addActivities(UserActivity activityList){
-        this.activityList.add(activityList);
+    public void addActivities(UserActivity activity){
+        this.activityList = activity;
     }
 
-    public ArrayList<UserActivity> getActivityList(){
+    public UserActivity getActivity(){
         return this.activityList;
+    }
+
+    public void addName(String name){
+        this.name = name;
+    }
+
+    public String getName(){
+        return this.name;
     }
 }

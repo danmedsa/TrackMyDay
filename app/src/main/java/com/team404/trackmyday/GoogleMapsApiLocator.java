@@ -65,13 +65,20 @@ public class GoogleMapsApiLocator extends FragmentActivity implements  OnMapRead
         setContentView(R.layout.google_maps_api_locator);
         initMap(savedInstanceState);
 
-        String intent = getIntent().getStringExtra("caller");
-        if(intent.equals("AddActivity")){
-            selectingActivity = true;
+        Intent intent = getIntent();
+        if(intent != null) {
+            String caller = intent.getStringExtra("caller");
+            if(caller == null){
+                caller = "";
+            }
+                if (caller.equals("AddActivity")) {
+                    selectingActivity = true;
+                } else {
+                    selectingActivity = false;
+                }
         }else{
             selectingActivity = false;
         }
-
         stopLocationService();
     }
     private void initMap(Bundle savedInstanceState) {

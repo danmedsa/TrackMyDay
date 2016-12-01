@@ -17,6 +17,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddActivity extends AppCompatActivity implements
         View.OnClickListener {
@@ -45,6 +47,7 @@ public class AddActivity extends AppCompatActivity implements
         setActivity = (Button) findViewById(R.id.showLocations);
 
         setActivity.setOnClickListener(this);
+        locations.setOnClickListener(this);
 
         session = UserSession.getInstance();
 
@@ -88,15 +91,18 @@ public class AddActivity extends AppCompatActivity implements
 
                         final ArrayList<UserLocationModel> userLocationModelArrayList=new ArrayList<UserLocationModel>();
 
-                        myRef.addValueEventListener(new ValueEventListener() {
+                        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
                                 UserLocationModel selected;
-
+                                String id = "";
                                 for(DataSnapshot dsp : dataSnapshot.getChildren()){
-                                    UserLocationModel users =dsp.getValue(UserLocationModel.class);
-                                    userLocationModelArrayList.add(users); //add result into array list
+                                    UserLocationModel users = dsp.getValue(UserLocationModel.class);
+                                    if(users.getLatitude() == lat && users.getLongitude() == lon) {
+                                        userLocationModelArrayList.add(users); //add result into array list
+                                        id = dsp.getKey();
+                                    }
                                 }
                                 String actName = String.valueOf(activity.getText());
                                 UserActivity act = new UserActivity(actName);
@@ -104,12 +110,19 @@ public class AddActivity extends AppCompatActivity implements
                                 for(UserLocationModel loc: userLocationModelArrayList){
                                     if(loc.getLatitude() == lat && loc.getLongitude() == lon){
                                         loc.addActivities(act);
-
-                                        String userId = myRef.push().getKey();
+                                        loc.addName(String.valueOf(locationName.getText()));
+                                        //String userId = myRef.push().getKey();
                                         UserLocationModel users = loc;
-                                        myRef.child(userId).setValue(users);
+                                        Map<String, Object> updates = new HashMap<>();
+                                        updates.put("activity",loc.getActivity());
+                                        updates.put("dateString",loc.getDateString());
+                                        updates.put("latitude",loc.getLatitude());
+                                        updates.put("longitude", loc.getLongitude());
+                                        updates.put("name", loc.getName());
+                                        updates.put("time", loc.getTime());
+                                        myRef.child(id).updateChildren(updates);
                                     }
-
+                                    Log.e("Location"," Lat: " + loc.getLatitude() + " Lon: " + loc.getLongitude());
                                 }
                             }
 
@@ -120,7 +133,7 @@ public class AddActivity extends AppCompatActivity implements
                             }
                         });
                     }else{
-                        Toast.makeText(this, "Select A Location first",Toast.LENGTH_SHORT);
+                        Toast.makeText(this, "Select A Location first",Toast.LENGTH_SHORT).show();
                     }
                 }
 
