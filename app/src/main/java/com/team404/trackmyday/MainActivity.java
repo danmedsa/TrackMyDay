@@ -357,9 +357,6 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void viewLocations(){
-        displayToast("Locations Requested");
-        displayToast("Display Locations");
-
         Intent i = new Intent(MainActivity.this,GoogleMapsApiLocator.class);
         startActivity(i);
 
@@ -367,6 +364,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private void viewReport(){
         Intent i = new Intent(this, ReportOptionsActivity.class);
+        i.putExtra("Email", email);
         startActivity(i);
     }
 
