@@ -1,5 +1,7 @@
 package com.team404.trackmyday;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.Button;
@@ -16,6 +18,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     public MainActivityTest(){
         super(MainActivity.class);
     }
+
 
     @Before
     public void setUp() throws Exception {
@@ -44,8 +47,15 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
         assertNotNull(appUsage);
         assertNotNull(contact);
         assertNotNull(signout);
-
     }
 
+    @SmallTest
+    public void testContactInfo(){
+        Context context = activity.getApplicationContext();
+        SharedPreferences settings = context.getSharedPreferences("ContactInfo", 0);
+        String numb = settings.getString("Number", "");
+
+        assertEquals(numb, "8063005006");
+    }
 
 }

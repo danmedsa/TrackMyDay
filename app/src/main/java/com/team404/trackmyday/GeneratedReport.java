@@ -3,9 +3,7 @@ package com.team404.trackmyday;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
-
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -65,7 +63,7 @@ public class GeneratedReport extends AppCompatActivity {
 
         //Set up connection to Firebase
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference().child("Users").child(email);
+        final DatabaseReference myRef = database.getReference().child("Users").child("Guest");
 
         //Determine whether it is a daily, weekly, or monthly report_lv
         getPeriodDate(period);

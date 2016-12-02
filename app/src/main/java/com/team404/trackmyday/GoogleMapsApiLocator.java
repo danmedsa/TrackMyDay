@@ -271,14 +271,14 @@ public class GoogleMapsApiLocator extends FragmentActivity implements  OnMapRead
     //Method to read from firebase db//
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        String email = "Group@";
+        String email = "Guest@";
         mMap = googleMap;
 
         Bundle extras = getIntent().getExtras();
         if (extras != null){
             email = extras.getString("Account");
         }
-        email = "Group@";
+        email = "Guest@";
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference().child("Users").child(cleanUpEmail(email));
 

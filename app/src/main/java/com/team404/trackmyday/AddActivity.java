@@ -66,7 +66,7 @@ public class AddActivity extends AppCompatActivity implements
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         //String email = session.getUser();
-        String email = "Group@";
+        String email = "Guest@";
         final DatabaseReference myRef = database.getReference().child("Users").child(cleanUpEmail(email));
     }
 
@@ -88,7 +88,7 @@ public class AddActivity extends AppCompatActivity implements
                     String caller = intent1.getStringExtra("caller");
                     if(caller != null){
                         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        final DatabaseReference myRef = database.getReference().child("Users").child("Group");//session.getUser());
+                        final DatabaseReference myRef = database.getReference().child("Users").child("Guest");//session.getUser());
 
                         final ArrayList<UserLocationModel> userLocationModelArrayList=new ArrayList<UserLocationModel>();
 
