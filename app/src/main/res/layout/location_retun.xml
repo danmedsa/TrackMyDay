@@ -11,10 +11,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50pt"
+        android:text=""
         android:id="@+id/coord_view"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50pt"
+        android:text=""
         android:id="@+id/coord_view2"/>
 
 </LinearLayout>
