@@ -3,6 +3,7 @@ package com.team404.trackmyday;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 
 import android.widget.ListView;
@@ -76,23 +77,82 @@ public class GeneratedReport extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                String tempTime;
+                String[] separatedTime;
+                int hour, minute, second, pm = 0;
+                int pHour, pMinute, pSecond;
+                double duration = 0;
+
+                int hDiff = 0, mDiff = 0, sDiff = 0;
+
                 //Clear any locations stored in the ArrayList
                 locations.clear();
 
                 UserLocationModel tempLocation = new UserLocationModel();
+                UserLocationModel previousLocation = new UserLocationModel();
                 count = 0;
 
                 //Collect the locations between the two dates for the specified email
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
 
                     tempLocation = child.getValue(UserLocationModel.class);
+                    tempTime = tempLocation.getTime();
+                    separatedTime = tempTime.split(":");
+                    hour = Integer.parseInt(separatedTime[0]);
+                    minute = Integer.parseInt(separatedTime[1]);
+                    second = Integer.parseInt(separatedTime[2]);
 
-                    locations.add(tempLocation);
 
+                    //Convert time to 12 hr clock
+                    if(hour > 12) {
+                        hour -= 12;
+                        pm = 1;
+                    }
+                    tempTime = tempTime.format("%02d:%02d:%02d",hour,minute,second);
 
+                    if (pm == 1)
+                        tempTime += " PM";
+                    else
+                        tempTime += " AM";
+
+                    tempLocation.setTime(tempTime);
+
+                    //Calculate duration
+                    if (locations.size() != 0){
+                        previousLocation = locations.get(locations.size()-1);
+                        if (previousLocation.getLongitude() == tempLocation.getLongitude() && previousLocation.getLatitude() == tempLocation.getLatitude()){
+                            //Separate the time into ints
+                            tempTime = previousLocation.getTime();
+                            separatedTime = tempTime.split(":");
+                            String[] tempSecond = separatedTime[2].split(" ");
+                            pHour = Integer.parseInt(separatedTime[0]);
+                            pMinute = Integer.parseInt(separatedTime[1]);
+                            pSecond = Integer.parseInt(tempSecond[0]);
+                            
+                            //Calculate the difference
+                            hDiff = hour - pHour;
+                            mDiff = minute - pMinute;
+                            sDiff = second - pSecond;
+
+                            duration += sDiff + (mDiff * 60) + (hDiff * 3600);
+                            duration = duration/60;
+                            
+                            //Instead of adding repeated data to locations, i.e. same GPS, set duration
+                            locations.get(locations.size()-1).setDuration(duration);
+                        }
+                        else {
+                            locations.add(tempLocation);
+                        }
+                    }
+                    else
+                        locations.add(tempLocation);
+
+/*
                     //Display retrieved information
-                    System.out.println("Location " + (count + 1) + ":\n\tLatitude: " + locations.get(count).getLatitude() + "\n\tLongitude: " + locations.get(count).getLongitude() + "\n\tDate: " + locations.get(count).getDateString() + "\n\tTime: " + locations.get(count).getTime());
-                    count++;
+                    System.out.println("Location " + (count) + ":\n\tLatitude: " + locations.get(count).getLatitude() + "\n\tLongitude: " + locations.get(count).getLongitude() + "\n\tDate: " + locations.get(count).getDateString() + "\n\tTime: " + tempTime);//locations.get(count).getTime());
+                   */ count++;
+
+                    duration = 0;
 
                     adapter.notifyDataSetChanged();
 
@@ -136,4 +196,5 @@ public class GeneratedReport extends AppCompatActivity {
         toast.setGravity(Gravity.BOTTOM,0,0);
         toast.show();
     }
+
 }
