@@ -17,6 +17,7 @@ import android.widget.Toast;
 public class ReportOptionsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnDaily, btnWeekly, btnMonthly;
+    private String email, period;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,13 @@ public class ReportOptionsActivity extends AppCompatActivity implements View.OnC
         btnDaily.setOnClickListener(this);
         btnWeekly.setOnClickListener(this);
         btnMonthly.setOnClickListener(this);
+
+        Bundle extras = getIntent().getExtras();
+        this.email = extras.getString("Email");
+
+        if (email == "Null" || email == "NULL" || email.isEmpty())
+            email = "Guest";
+
     }
 
     @Override
@@ -40,12 +48,15 @@ public class ReportOptionsActivity extends AppCompatActivity implements View.OnC
         //Request a report based on the user's selection
         switch (id) {
             case R.id.btn_daily_report:
+                period = "DAILY";
                 displayDailyReport();
                 break;
             case R.id.btn_weekly_report:
+                period = "WEEKLY";
                 displayWeeklyReport();
                 break;
             case R.id.btn_monthly_report:
+                period = "MONTHLY";
                 displayMonthlyReport();
                 break;
         }
@@ -61,8 +72,8 @@ public class ReportOptionsActivity extends AppCompatActivity implements View.OnC
     //Request to Display Daily Report
     private void displayDailyReport() {
         Intent i = new Intent(ReportOptionsActivity.this, GeneratedReport.class);
-        i.putExtra("Email", "James - Testing");
-        i.putExtra("Period", "DAILY");
+        i.putExtra("Email", email);
+        i.putExtra("Period", period);
         startActivity(i);
 
     }
@@ -70,8 +81,8 @@ public class ReportOptionsActivity extends AppCompatActivity implements View.OnC
     //Request to display Weekly Report
     private void displayWeeklyReport(){
         Intent i = new Intent(ReportOptionsActivity.this, GeneratedReport.class);
-        i.putExtra("Email", "James - Testing");
-        i.putExtra("Period", "WEEKLY");
+        i.putExtra("Email", email);
+        i.putExtra("Period", period);
         startActivity(i);
 
     }
@@ -79,8 +90,8 @@ public class ReportOptionsActivity extends AppCompatActivity implements View.OnC
     //Request to display Monthly Report
     private void displayMonthlyReport(){
         Intent i = new Intent(ReportOptionsActivity.this, GeneratedReport.class);
-        i.putExtra("Email", "James - Testing");
-        i.putExtra("Period", "MONTHLY");
+        i.putExtra("Email", email);
+        i.putExtra("Period", period);
         startActivity(i);
     }
 
