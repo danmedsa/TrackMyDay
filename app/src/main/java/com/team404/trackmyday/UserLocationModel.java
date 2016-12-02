@@ -13,6 +13,7 @@ public class UserLocationModel {
     private UserActivity activityList;
     private String name;
     private String time;
+    private double duration;
 
     public UserLocationModel(double latitude, double longitude, String dateString, String time) {
         this.latitude = latitude;
@@ -74,4 +75,8 @@ public class UserLocationModel {
     public String getName(){
         return this.name;
     }
+
+    public void setDuration(double duration) { this.duration = duration; }
+
+    public double getDuration() { return this.duration; }
 }
