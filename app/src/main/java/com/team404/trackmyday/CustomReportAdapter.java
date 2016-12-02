@@ -11,6 +11,7 @@ import com.google.android.gms.vision.text.Text;
 import com.team404.trackmyday.R;
 import com.team404.trackmyday.UserLocationModel;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -49,19 +50,49 @@ public class CustomReportAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(this.c).inflate(R.layout.report_model,parent,false);
 
 
-        TextView txtLatLong = (TextView) convertView.findViewById(R.id.txtLatLong);
+        TextView txtLocationName = (TextView) convertView.findViewById(R.id.location_name);
+        TextView txtLat = (TextView) convertView.findViewById(R.id.txtLat);
+        TextView txtLong = (TextView) convertView.findViewById(R.id.txtLong);
         TextView txtDate = (TextView) convertView.findViewById(R.id.txtDate);
         TextView txtTime = (TextView) convertView.findViewById(R.id.txtTime);
+        TextView txtDuration = (TextView) convertView.findViewById(R.id.txtDuration);
 
         final UserLocationModel location = (UserLocationModel) this.getItem(position);
 
-        txtLatLong.setText("Latitude: " + location.getLatitude() + "\nLongitude: " + location.getLongitude());
+        if(location.getName() == null) {
+            txtLocationName.setVisibility(View.GONE);
+            txtLat.setPadding(0,10,0,0);
+            txtLong.setPadding(0,10,0,0);
+        }else{
+            txtLocationName.setText(location.getName());
+            txtLocationName.setTextColor(c.getResources().getColor(R.color.colorPrimaryDark));
+
+        }
+
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(8);
+
+        txtLat.setText("Latitude: " + df.format(location.getLatitude()));
+        txtLong.setText("Longitude: "+ df.format(location.getLongitude()));
         txtDate.setText("Date Visited: " + location.getDateString());
         txtTime.setText("Time Visited: " + location.getTime());
 
-        txtLatLong.setTextColor(c.getResources().getColor(R.color.colorPrimaryDark));
+
+        df.setMaximumFractionDigits(2);
+        if(location.getDuration() > 5) {
+            txtDuration.setText("Duration: " + df.format(location.getDuration()) + " minutes");
+            txtDuration.setTextColor(c.getResources().getColor(R.color.colorPrimaryDark));
+        }
+        else {
+            txtDuration.setVisibility(View.GONE);
+            txtTime.setPadding(0,0,0,10);
+
+        }
+        txtLat.setTextColor(c.getResources().getColor(R.color.colorPrimaryDark));
+        txtLong.setTextColor(c.getResources().getColor(R.color.colorPrimaryDark));
         txtDate.setTextColor(c.getResources().getColor(R.color.colorPrimaryDark));
         txtTime.setTextColor(c.getResources().getColor(R.color.colorPrimaryDark));
+        txtDuration.setTextColor(c.getResources().getColor(R.color.colorPrimaryDark));
 
         return convertView;
     }
